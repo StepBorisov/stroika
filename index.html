@@ -7,304 +7,336 @@
 <meta name="description" content="Рассчитайте предварительную стоимость ремонтных, строительных, монтажных и отделочных работ онлайн.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;600;800&family=IBM+Plex+Sans+Condensed:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#E9ECE7; --sheet:#F9F9F5; --ink:#14233F; --ink2:#4A566C; --rule:#B4BAB3; --rule2:#D3D7D1;
-  --red:#D2352A; --blue:#1B3FA0; --hl:#F6E56B; --hl2:#FBF2B0; --err:#B3261E; --ok:#2E7D4F;
+  --dark:#1D2023; --dark2:#16181A; --dark3:#2A2E32; --line-d:#3A4046;
+  --orange:#E85A0C; --orange-h:#CF4D05; --orange-t:#C94A00; --tint:#FFF1E8;
+  --bg:#FFFFFF; --grey:#F2F3F4; --ink:#1D2023; --ink2:#6A7078; --line:#E0E3E6; --err:#C62828;
   --s1:8px; --s2:16px; --s3:24px; --s4:40px; --s5:64px; --s6:96px;
-  --pad:20px; --hdr:56px; --ruler:28px;
-  --f-d:'Geologica',system-ui,'Segoe UI',sans-serif;
-  --f-b:'IBM Plex Sans Condensed','Arial Narrow',system-ui,sans-serif;
+  --r:6px; --pad:20px; --hdr:72px;
+  --f:'Onest','Segoe UI',system-ui,-apple-system,Roboto,Arial,sans-serif;
+  --shadow:0 10px 30px rgba(20,24,28,.08);
+  --shadow-h:0 18px 44px rgba(20,24,28,.14);
   --ease:cubic-bezier(.16,1,.3,1);
 }
 @media (min-width:768px){:root{--pad:24px}}
 @media (min-width:1024px){:root{--pad:32px}}
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:100px}
-body{font-family:var(--f-b);font-size:18px;line-height:1.55;color:var(--ink);background:var(--paper);text-align:left;font-variant-numeric:lining-nums tabular-nums;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{font-family:var(--f);font-size:16px;line-height:1.6;color:var(--ink);background:var(--bg);text-align:left;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
 button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
 input,textarea{font:inherit;color:inherit}
 a{color:inherit;text-decoration:none}
 [hidden]{display:none!important}
-::selection{background:var(--hl)}
-:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+::selection{background:var(--orange);color:#fff}
+:focus-visible{outline:3px solid rgba(232,90,12,.5);outline-offset:2px}
 .container{max-width:1280px;margin:0 auto;padding-inline:var(--pad)}
 .sec{padding-block:var(--s5)}
-.sec + .sec{border-top:1px solid var(--ink)}
+.sec.grey{background:var(--grey)}
+.sec.dark{background:var(--dark);color:#fff}
 @media (min-width:1024px){.sec{padding-block:var(--s6)}}
 
-h1,h2,h3,h4{font-family:var(--f-d);font-weight:800;letter-spacing:-.03em;line-height:1.05}
-h1{font-size:clamp(40px,11.5vw,88px);overflow-wrap:break-word}
-h2{font-size:clamp(32px,5vw,48px)}
-h3{font-size:22px;font-weight:600;letter-spacing:-.015em;line-height:1.2}
-.lead{font-size:20px;color:var(--ink2);max-width:34em;margin-top:var(--s2)}
-.sec-head{max-width:760px;margin-bottom:var(--s4)}
+h1,h2,h3,h4{font-weight:600;letter-spacing:-.015em;line-height:1.2}
+h1{font-size:clamp(28px,3.6vw,40px);letter-spacing:-.02em;line-height:1.15}
+h2{font-size:clamp(24px,2.7vw,32px)}
+h3{font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
+.lead{font-size:18px;color:var(--ink2);max-width:34em;margin-top:var(--s2)}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;margin-bottom:var(--s2);font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-t)}
+.eyebrow::before{content:"";width:24px;height:3px;background:var(--orange)}
+.dark .eyebrow,.hero .eyebrow{color:#FF8A4C}
+.sec-head{max-width:720px;margin-bottom:var(--s4)}
 
 /* Buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 32px;border:2px solid var(--ink);border-radius:2px;background:var(--sheet);color:var(--ink);font-family:var(--f-d);font-weight:600;font-size:16px;letter-spacing:-.005em;white-space:nowrap;transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .2s}
-.btn:hover{transform:translate(-3px,-3px);box-shadow:3px 3px 0 var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:52px;padding:0 28px;border-radius:4px;background:var(--orange);color:#fff;font-weight:600;font-size:15px;white-space:nowrap;transition:background .25s,transform .3s var(--ease),box-shadow .3s var(--ease),color .25s,border-color .25s}
+.btn:hover{background:var(--orange-h);transform:translateY(-2px);box-shadow:0 10px 24px rgba(232,90,12,.3)}
 .btn:active{transform:none;box-shadow:none}
-.btn-primary{background:var(--red);color:#fff}
-.btn-light{background:#fff;color:var(--ink)}
-.btn-sm{min-height:48px;padding:0 24px;font-size:14px}
+.btn-arrow::after{content:"";width:16px;height:16px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='square'%3E%3Cpath d='M7 17L17 7M8 7h9v9'/%3E%3C/svg%3E") center/contain no-repeat}
+.btn-lg{min-height:58px;padding:0 32px}
+.btn-sm{min-height:44px;padding:0 20px;font-size:14px}
+.btn-dark{background:var(--dark)}
+.btn-dark:hover{background:#000;box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff}
+.btn-ghost:hover{background:#fff;color:var(--ink);border-color:#fff;box-shadow:none}
 .btn-block{width:100%}
 .btn[disabled]{opacity:.5;pointer-events:none}
-.link{display:inline-block;padding-block:4px;border-bottom:2px solid var(--ink);font-weight:500;transition:color .2s,border-color .2s}
-.link:hover{color:var(--red);border-color:var(--red)}
-.btn-line{min-height:44px;padding:0;font-size:16px;font-weight:500;border-bottom:2px solid var(--ink);line-height:1.2}
-.btn-line:hover{color:var(--red);border-color:var(--red)}
-.chip{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:2px solid var(--ink);border-radius:2px;font-weight:500;transition:background .2s}
-.chip:hover{background:var(--hl)}
+.btn-line{min-height:44px;padding:0 16px;border:1px solid rgba(255,255,255,.3);border-radius:4px;font-size:14px;font-weight:500;color:#fff;transition:background .2s,border-color .2s}
+.btn-line:hover{background:rgba(255,255,255,.1);border-color:#fff}
+.chip{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border:1px solid var(--line-d);border-radius:4px;color:#fff;font-weight:500;font-size:15px;transition:background .2s,border-color .2s}
+.chip:hover{background:var(--orange);border-color:var(--orange)}
 
-/* Header + ruler */
-header{position:sticky;top:0;z-index:50;background:var(--paper)}
+/* Header */
+header{position:sticky;top:0;z-index:50;background:#fff;transition:box-shadow .3s}
+header.scrolled{box-shadow:0 4px 20px rgba(20,24,28,.08)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:var(--hdr);gap:var(--s2)}
-.logo{display:flex;align-items:center;gap:12px;font-family:var(--f-d);font-weight:800;font-size:20px;letter-spacing:-.02em}
-.logo-mark{position:relative;width:32px;height:32px;border:2px solid var(--ink);display:grid;place-items:center;font-size:12px;letter-spacing:0}
-.logo-mark::after{content:"";position:absolute;right:-2px;bottom:-2px;width:10px;height:10px;background:var(--red)}
-.nav-links{display:none;gap:var(--s3);font-size:16px}
-.nav-links a{padding-block:4px;border-bottom:2px solid transparent;transition:border-color .2s}
-.nav-links a:hover{border-color:var(--ink)}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px;letter-spacing:-.02em}
+.logo-mark{width:40px;height:40px;border-radius:4px;background:var(--orange);color:#fff;display:grid;place-items:center;font-size:14px;letter-spacing:0;clip-path:polygon(0 0,100% 0,100% 72%,72% 100%,0 100%)}
+.nav-links{display:none;gap:20px;font-size:15px;font-weight:500;white-space:nowrap}
+.nav-links a{position:relative;padding-block:8px;transition:color .2s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--orange);transition:width .3s var(--ease)}
+.nav-links a:hover{color:var(--orange-t)}.nav-links a:hover::after{width:100%}
 .nav-right{display:flex;align-items:center;gap:var(--s2)}
-.nav-phone{display:none;font-family:var(--f-d);font-weight:600;font-size:16px}
-.burger{width:44px;height:44px;border:2px solid var(--ink);display:grid;place-items:center}
-.burger span,.burger span::before{display:block;width:18px;height:2px;background:var(--ink);position:relative}
+.nav-phone{display:none;font-weight:700;font-size:16px;white-space:nowrap}
+.nav-cta{display:none}
+.burger{width:44px;height:44px;border-radius:4px;border:1px solid var(--line);display:grid;place-items:center}
+.burger span,.burger span::before{display:block;width:20px;height:2px;background:var(--ink);position:relative}
 .burger span::before{content:"";position:absolute;top:6px;left:0}
 .mobile-menu{display:none;padding-bottom:var(--s2)}
 .mobile-menu.open{display:grid}
-.mobile-menu a{padding:12px 0;border-top:1px solid var(--rule);font-family:var(--f-d);font-weight:600}
-@media (min-width:1024px){.nav-links{display:flex}.nav-phone{display:block}.burger,.mobile-menu{display:none!important}}
-.ruler{position:relative;height:var(--ruler);border-block:1px solid var(--ink);background:var(--sheet);overflow:hidden}
-.ruler svg{display:block;animation:draw 1.1s var(--ease) both}
-.ruler line{stroke:var(--ink);stroke-width:1}
-.ruler text{fill:var(--ink2);font:500 10px var(--f-b)}
-.pointer{position:absolute;top:0;bottom:0;left:0;width:2px;background:var(--red);will-change:transform}
-.pointer::before{content:"";position:absolute;top:0;left:-4px;border:5px solid transparent;border-top-color:var(--red)}
-@keyframes draw{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.mobile-menu a{padding:14px 0;border-top:1px solid var(--line);font-weight:600}
+@media (min-width:1024px){.nav-links{display:flex}.burger,.mobile-menu{display:none!important}}
+@media (min-width:1280px){.nav-phone{display:block}.nav-cta{display:inline-flex}}
+
+/* Image placeholders */
+.imgph{position:relative;overflow:hidden;background:#D9DDE1 repeating-linear-gradient(135deg,transparent 0 14px,rgba(0,0,0,.035) 14px 15px);display:grid;place-items:center;background-size:cover;background-position:center}
+.imgph::after{content:"Фото";font-size:14px;font-weight:500;color:#8A9098}
+.imgph.has-img::after,.imgph:has(img)::after{display:none}
+.imgph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.dark .imgph,.hero .imgph{background-color:#343A40;background-image:repeating-linear-gradient(135deg,transparent 0 14px,rgba(255,255,255,.04) 14px 15px)}
+.dark .imgph::after,.hero .imgph::after{color:#7C848D}
 
 /* Hero */
-.hero{padding-block:var(--s5) var(--s6)}
-.hero-grid{display:grid;gap:var(--s5);align-items:start}
-@media (min-width:1024px){.hero-grid{grid-template-columns:7fr 5fr;gap:var(--s6)}}
-.hero .lead{margin-top:var(--s3)}
-.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);margin-top:var(--s4)}
-.pricesheet{position:relative;background:var(--sheet);border:1px solid var(--ink);padding:var(--s3)}
-.sheet-title{font-family:var(--f-d);font-weight:600;font-size:18px}
-.pricesheet ul{list-style:none;margin-top:var(--s2);position:relative}
-.pricesheet ul::before{content:"";position:absolute;top:-8px;bottom:0;left:42px;width:1px;background:var(--red)}
-.pricesheet li{display:grid;grid-template-columns:36px 1fr auto;gap:12px;padding:12px 0;border-bottom:1px dotted var(--ink2);font-size:16px;line-height:1.3;opacity:0;animation:rowin .6s var(--ease) forwards;animation-delay:calc(.7s + var(--i) * .09s)}
-.pricesheet li:last-child{border-bottom:0}
-.r-code{color:var(--ink2)}
-.r-price{font-weight:600;white-space:nowrap;text-align:right}
-.r-price small{font-weight:400;color:var(--ink2);font-size:14px}
-.sheet-foot{margin-top:var(--s2);font-size:14px;color:var(--ink2)}
-@keyframes rowin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{background:var(--dark);color:#fff;overflow:hidden}
+.hero-grid{display:grid;gap:var(--s4)}
+.hero-grid > *{min-width:0}
+.hero-copy{padding-top:var(--s5)}
+.hero .lead{color:#B6BCC4;margin-top:var(--s3);max-width:30em}
+.hero-cta{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s4)}
+.hero-points{list-style:none;display:grid;gap:12px;margin-top:var(--s4)}
+.hero-points li{display:flex;align-items:center;gap:12px;font-size:15px;color:#D6DAE0}
+.hero-points li::before{content:"";width:20px;height:20px;flex:none;background:var(--orange) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='square'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/12px no-repeat}
+.hero-media{position:relative;min-height:320px;margin-inline:calc(var(--pad) * -1)}
+.hero-photo{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
+.hero-badge{position:absolute;left:var(--pad);bottom:var(--s3);background:#fff;color:var(--ink);padding:var(--s3);border-radius:var(--r);border-bottom:4px solid var(--orange);box-shadow:var(--shadow-h);max-width:220px;animation:rise .9s .3s var(--ease) both}
+.hero-badge b{display:block;font-size:48px;font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--orange)}
+.hero-badge span{display:block;margin-top:6px;font-size:14px;color:var(--ink2);line-height:1.35}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media (min-width:1024px){
+  .hero-grid{grid-template-columns:1fr 1fr;gap:var(--s5);align-items:stretch}
+  .hero-copy{padding-block:var(--s6)}
+  .hero-media{margin-inline:0;min-height:560px}
+  .hero-photo{clip-path:polygon(16% 0,100% 0,100% 100%,0 100%);right:calc((100vw - 100%) / -2)}
+  .hero-badge{left:0;bottom:var(--s4)}
+}
 
 /* Forms */
-.field{display:grid;gap:4px}
-.field label{font-size:14px;color:var(--ink2)}
-.input{width:100%;min-height:52px;padding:12px 0;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:transparent;font-size:18px;outline:0;transition:background .2s}
-textarea.input{min-height:96px;resize:vertical}
-.input:focus{background:var(--hl2)}
-.input.bad{border-color:var(--err);background:#FBE3E0}
+.field{display:grid;gap:6px}
+.field label{font-size:14px;font-weight:500;color:var(--ink2)}
+.input{width:100%;min-height:52px;padding:12px 16px;border:1px solid #D5D9DD;border-radius:4px;background:#fff;font-size:16px;outline:0;transition:border-color .2s,box-shadow .2s}
+textarea.input{min-height:104px;resize:vertical}
+.input::placeholder{color:#9AA0A7}
+.input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(232,90,12,.15)}
+.input.bad{border-color:var(--err);background:#FFF4F4}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.status{padding:12px var(--s2);border-left:4px solid;font-size:16px}
-.status.info{background:#E3E8F6;border-color:var(--blue)}
-.status.ok{background:#E1EFE6;border-color:var(--ok)}
-.status.err{background:#FBE3E0;border-color:var(--err)}
+.status{padding:12px var(--s2);border-radius:4px;border-left:4px solid;font-size:14px}
+.status.info{background:#EEF2F7;border-color:#4A6FA5;color:#23395B}
+.status.ok{background:#E8F5EC;border-color:#2E7D4F;color:#1B5E3A}
+.status.err{background:#FDECEC;border-color:var(--err);color:#8E1B1B}
 
 /* Calculator */
-.note{max-width:760px;padding:8px 0 8px var(--s2);border-left:4px solid var(--red);margin-bottom:var(--s4);font-size:17px}
-.note b{font-weight:600}
+.note{display:flex;gap:var(--s2);align-items:flex-start;max-width:820px;padding:var(--s2) var(--s3);margin-bottom:var(--s4);background:var(--tint);border-left:4px solid var(--orange);border-radius:0 var(--r) var(--r) 0;font-size:15px;color:#5A3010}
+.note b{color:var(--ink);font-weight:600}
 .calc-grid{display:grid;gap:var(--s4)}
 .calc-grid > *{min-width:0}
-.chk-label,.item-name{min-width:0}
-@media (min-width:1024px){.calc-grid{grid-template-columns:1fr 440px;align-items:start}.estimate{position:sticky;top:112px}}
-.acc{border-top:2px solid var(--ink)}
-.acc-item{background:var(--sheet);border-bottom:1px solid var(--ink)}
-.acc-btn{width:100%;display:grid;grid-template-columns:40px 1fr auto 24px;align-items:center;gap:var(--s2);min-height:72px;padding:var(--s2);text-align:left}
-.acc-btn:hover{background:var(--hl2)}
-.acc-n{font-family:var(--f-d);font-weight:800;font-size:28px;color:var(--ink2);transition:color .2s}
-.open > .acc-btn .acc-n{color:var(--red)}
-.acc-title{font-family:var(--f-d);font-weight:600;font-size:20px;line-height:1.2;letter-spacing:-.01em}
-.acc-title small{display:block;font-family:var(--f-b);font-weight:400;font-size:14px;color:var(--ink2);letter-spacing:0;margin-top:2px}
-.badge{min-width:28px;height:28px;padding-inline:8px;background:var(--ink);color:var(--sheet);font:600 14px/28px var(--f-b);text-align:center;opacity:0;transform:scale(.6);transition:opacity .2s,transform .3s var(--ease)}
+@media (min-width:1024px){.calc-grid{grid-template-columns:1fr 440px;align-items:start}.estimate{position:sticky;top:96px}}
+.acc{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.acc-item{border-bottom:1px solid var(--line);border-left:4px solid transparent;transition:border-color .3s}
+.acc-item:last-child{border-bottom:0}
+.acc-item.open{border-left-color:var(--orange)}
+.acc-btn{width:100%;display:grid;grid-template-columns:36px minmax(0,1fr) auto 20px;align-items:center;gap:var(--s2);min-height:72px;padding:var(--s2) var(--s3) var(--s2) var(--s2);text-align:left;transition:background .2s}
+.acc-btn:hover{background:var(--grey)}
+.acc-n{width:36px;height:36px;display:grid;place-items:center;border-radius:4px;background:var(--tint);color:var(--orange-t);font-size:14px;font-weight:700;transition:background .25s,color .25s}
+.open > .acc-btn .acc-n{background:var(--orange);color:#fff}
+.acc-title{font-size:18px;font-weight:700;letter-spacing:-.01em;line-height:1.25}
+.acc-title small{display:block;font-weight:400;font-size:14px;color:var(--ink2);letter-spacing:0;margin-top:2px}
+.badge{min-width:26px;height:26px;padding-inline:8px;border-radius:13px;background:var(--dark);color:#fff;font-size:12px;font-weight:600;line-height:26px;text-align:center;opacity:0;transform:scale(.7);transition:opacity .2s,transform .3s var(--ease)}
 .badge.on{opacity:1;transform:none}
-.chev{width:24px;height:24px;transition:transform .35s var(--ease)}
+.chev{width:20px;height:20px;color:var(--ink2);transition:transform .4s var(--ease)}
 .open > .acc-btn .chev{transform:rotate(180deg)}
-.acc-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease)}
+.acc-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
 .open > .acc-panel{grid-template-rows:1fr}
 .acc-inner{overflow:hidden;min-height:0}
-.acc-list{border-top:1px solid var(--rule)}
-.item{padding:4px var(--s2) 4px 12px;border-bottom:1px solid var(--rule2);transition:background .2s}
-.item:last-child{border-bottom:0}
-.item.sel{background:var(--hl2);box-shadow:inset 4px 0 0 var(--red)}
+.acc-list{padding:0 var(--s2) var(--s2);display:grid;gap:4px}
+.item{padding:4px var(--s2) 4px 12px;border-radius:var(--r);border:1px solid transparent;transition:background .2s,border-color .2s}
+.item:hover{background:var(--grey)}
+.item.sel{background:#FFF8F3;border-color:#FAD3BA}
 .item-top{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:start}
-.code{padding-top:10px;line-height:24px;font-size:16px;color:var(--ink2)}
+.code{padding-top:11px;line-height:22px;font-size:14px;color:var(--ink2)}
 .chk-label{display:flex;align-items:flex-start;gap:12px;min-height:44px;padding-block:10px;cursor:pointer}
 .chk-label input{position:absolute;opacity:0;pointer-events:none}
-.box{flex:none;width:24px;height:24px;border:2px solid var(--ink);background:var(--sheet);display:grid;place-items:center;transition:background .15s}
-.box svg{width:14px;height:14px;stroke:var(--sheet);stroke-width:3;fill:none;stroke-linecap:square;transform:scale(0);transition:transform .25s var(--ease)}
-.chk-label input:checked + .box{background:var(--ink)}
+.box{flex:none;width:22px;height:22px;margin-top:0;border:2px solid #B4BAC1;border-radius:4px;background:#fff;display:grid;place-items:center;transition:background .2s,border-color .2s}
+.box svg{width:12px;height:12px;stroke:#fff;stroke-width:3.2;fill:none;stroke-linecap:square;transform:scale(0);transition:transform .25s var(--ease)}
+.chk-label input:checked + .box{background:var(--orange);border-color:var(--orange)}
 .chk-label input:checked + .box svg{transform:scale(1)}
-.chk-label input:focus-visible + .box{outline:3px solid var(--blue);outline-offset:2px}
-.item-name{font-size:17px;line-height:1.3;padding-top:1px}
-.item-price{padding-top:10px;line-height:24px;font-size:16px;color:var(--ink2);white-space:nowrap}
-.item-qty{display:flex;align-items:center;flex-wrap:wrap;gap:var(--s2);margin:0 0 8px 52px;animation:pop .3s var(--ease)}
+.chk-label input:focus-visible + .box{outline:3px solid rgba(232,90,12,.5);outline-offset:2px}
+.item-name{font-size:16px;line-height:1.4;min-width:0}
+.item-price{padding-top:11px;line-height:22px;font-size:14px;font-weight:500;color:var(--ink2);white-space:nowrap}
+.item-qty{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:0 0 8px 52px;animation:pop .35s var(--ease)}
 @keyframes pop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-.stepper{display:inline-flex;border:2px solid var(--ink);background:var(--sheet)}
-.stepper button{width:44px;height:40px;font-family:var(--f-d);font-size:22px;line-height:1;transition:background .15s,color .15s}
-.stepper button:hover{background:var(--ink);color:var(--sheet)}
-.stepper input{width:88px;height:40px;min-width:0;border:0;border-inline:2px solid var(--ink);background:transparent;text-align:center;font-size:18px;font-weight:500;outline:0}
-.stepper:focus-within{outline:3px solid var(--blue);outline-offset:2px}
-.stepper.bad{border-color:var(--err);background:#FBE3E0}
-.stepper.bad input{border-color:var(--err)}
-.unit{font-size:16px;color:var(--ink2)}
-.line-sum{margin-left:auto;font-family:var(--f-d);font-weight:600;font-size:18px;letter-spacing:-.01em}
-.rm{width:44px;height:44px;display:grid;place-items:center;color:var(--ink2);transition:color .15s}
-.rm:hover{color:var(--red)}
+.stepper{display:inline-flex;align-items:center;border:1px solid #CBD0D5;border-radius:4px;background:#fff;overflow:hidden}
+.stepper button{width:40px;height:42px;font-size:20px;line-height:1;transition:background .15s,color .15s}
+.stepper button:hover{background:var(--orange);color:#fff}
+.stepper input{width:84px;height:42px;min-width:0;border:0;border-inline:1px solid #CBD0D5;background:transparent;text-align:center;font-size:16px;font-weight:600;outline:0}
+.stepper:focus-within{border-color:var(--orange);box-shadow:0 0 0 3px rgba(232,90,12,.15)}
+.stepper.bad{border-color:var(--err);background:#FFF4F4}
+.unit{font-size:14px;color:var(--ink2)}
+.line-sum{margin-left:auto;font-size:17px;font-weight:700;letter-spacing:-.01em}
+.rm{width:40px;height:40px;border-radius:4px;display:grid;place-items:center;color:var(--ink2);transition:background .15s,color .15s}
+.rm:hover{background:#FDECEC;color:var(--err)}
 .hint{margin:0 0 8px 52px;font-size:14px;color:var(--err)}
-.empty-cat{padding:var(--s3);border:2px dashed var(--rule);color:var(--ink2)}
+.empty-cat{padding:var(--s3);color:var(--ink2)}
 @media (max-width:639px){
-  .item-top{grid-template-columns:32px 1fr}
+  .item-top{grid-template-columns:28px 1fr}
   .item-price{grid-column:2;padding-top:0;margin-top:-6px;margin-bottom:6px}
-  .item-qty,.hint{margin-left:44px}
-  .acc-btn{grid-template-columns:32px 1fr auto 24px;padding-inline:12px}
+  .item-qty,.hint{margin-left:40px}
+  .acc-btn{grid-template-columns:32px minmax(0,1fr) auto 20px;gap:12px;padding-inline:12px}
+  .acc-n{width:32px;height:32px}
 }
 
-/* Estimate sheet */
-.estimate{position:relative;background:var(--sheet);border:1px solid var(--ink);padding:var(--s3) var(--s3) var(--s3) 56px}
-.estimate::before{content:"";position:absolute;top:0;bottom:0;left:36px;width:1px;background:var(--red)}
-@media (max-width:639px){.estimate{padding:var(--s3) var(--s2) var(--s3) 40px}.estimate::before{left:24px}}
-.est-head{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s2)}
-.est-head h3{font-family:var(--f-d);font-weight:800;font-size:28px;letter-spacing:-.03em}
-.link-btn{font-size:16px;color:var(--ink2);text-decoration:underline;text-underline-offset:3px;min-height:44px}
-.link-btn:hover{color:var(--red)}
-.est-empty{margin:var(--s2) 0;padding:var(--s2);border:2px dashed var(--rule);color:var(--ink2);font-size:16px}
-.est-list{list-style:none;max-height:440px;overflow:auto;margin:var(--s2) 0}
-.est-li{display:grid;gap:8px;padding:12px 0;border-bottom:1px dotted var(--ink2);animation:pop .3s var(--ease)}
-.est-name{font-size:16px;font-weight:500;line-height:1.3}
-.est-meta{font-size:14px;color:var(--ink2)}
+/* Estimate: тёмная панель */
+.estimate{background:var(--dark);color:#fff;border-radius:var(--r);padding:var(--s3);box-shadow:var(--shadow-h);border-top:4px solid var(--orange)}
+@media (min-width:768px){.estimate{padding:var(--s4) var(--s4) var(--s3)}}
+.est-head{display:flex;justify-content:space-between;align-items:center;gap:var(--s2)}
+.est-head h3{font-size:24px;font-weight:700}
+.link-btn{font-size:14px;color:#9AA1AB;text-decoration:underline;text-underline-offset:3px;min-height:40px}
+.link-btn:hover{color:#fff}
+.est-empty{margin:var(--s2) 0;padding:var(--s3);border:1px dashed var(--line-d);border-radius:var(--r);color:#9AA1AB;font-size:15px}
+.est-list{list-style:none;max-height:420px;overflow:auto;margin:var(--s2) 0}
+.est-list::-webkit-scrollbar{width:6px}.est-list::-webkit-scrollbar-thumb{background:var(--line-d)}
+.est-li{display:grid;gap:8px;padding:14px 0;border-top:1px solid var(--line-d);animation:pop .3s var(--ease)}
+.est-name{font-size:15px;font-weight:600;line-height:1.35}
+.est-meta{font-size:13px;color:#9AA1AB}
 .est-ctrl{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
-.est-li .stepper button{width:36px;height:36px;font-size:20px}
-.est-li .stepper input{width:72px;height:36px;font-size:16px}
-.est-li .line-sum{font-size:16px}
-.est-li .hint{margin:0}
-.est-total{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:var(--s1);padding-top:var(--s2);border-top:2px solid var(--ink)}
-.est-total > span:first-child{font-family:var(--f-d);font-weight:600;font-size:18px}
-.total-val{margin-left:auto;padding:0 4px;font-family:var(--f-d);font-weight:800;font-size:28px;letter-spacing:-.03em;line-height:1.2;background:linear-gradient(transparent 55%,var(--hl) 55%);overflow-wrap:anywhere;text-align:right}
-.est-note{margin-top:var(--s1);font-size:14px;color:var(--ink2)}
-.est-actions{display:flex;flex-wrap:wrap;gap:var(--s3);margin:var(--s3) 0}
-.send-box{display:grid;gap:var(--s2);padding-top:var(--s3);border-top:1px solid var(--ink)}
-.send-box h4{font-size:20px;font-weight:600;letter-spacing:-.015em}
+.est-li .stepper{background:var(--dark3);border-color:var(--line-d)}
+.est-li .stepper button{width:36px;height:36px;color:#C8CDD3}
+.est-li .stepper input{width:68px;height:36px;font-size:14px;color:#fff;border-color:var(--line-d)}
+.est-li .stepper.bad{border-color:#FF6B6B;background:#3A2327}
+.est-li .unit{color:#9AA1AB}
+.est-li .line-sum{font-size:15px}
+.est-li .rm{width:36px;height:36px;color:#9AA1AB}
+.est-li .rm:hover{background:#3A2327;color:#FF8080}
+.est-li .hint{margin:0;color:#FF8080}
+.est-total{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:var(--s1);padding-top:var(--s2);border-top:1px solid var(--line-d)}
+.est-total > span:first-child{font-size:15px;color:#9AA1AB}
+.total-val{margin-left:auto;font-size:36px;font-weight:800;letter-spacing:-.035em;line-height:1.15;color:#fff;overflow-wrap:anywhere;text-align:right}
+.est-note{margin-top:var(--s1);font-size:13px;color:#9AA1AB;line-height:1.45}
+.est-actions{display:flex;flex-wrap:wrap;gap:var(--s1);margin:var(--s3) 0}
+.send-box{display:grid;gap:var(--s2);padding-top:var(--s3);border-top:1px solid var(--line-d)}
+.send-box h4{font-size:18px}
+.estimate .field label{color:#9AA1AB}
+.estimate .input{background:var(--dark3);border-color:var(--line-d);color:#fff;min-height:48px}
+.estimate .input::placeholder{color:#7C848D}
+.estimate .input:focus{border-color:var(--orange)}
+.estimate .input.bad{background:#3A2327;border-color:#FF6B6B}
+.estimate .status.info{background:#26344D;color:#C9D8F2;border-color:#7FA2E0}
+.estimate .status.ok{background:#173A29;color:#9FE0BC}
+.estimate .status.err{background:#3A2327;color:#FFB4B4}
 
-/* Photo request: синька */
-.blueprint{background-color:var(--blue);color:#fff;background-image:
-  linear-gradient(rgba(255,255,255,.18) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(255,255,255,.18) 1px,transparent 1px),
-  linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);
-  background-size:120px 120px,120px 120px,24px 24px,24px 24px}
-.blueprint :focus-visible{outline-color:#fff}
-.req{display:grid;gap:var(--s5)}
-@media (min-width:1024px){.req{grid-template-columns:1fr 1fr;gap:var(--s6)}}
-.req p{margin-top:var(--s2);color:rgba(255,255,255,.9);max-width:30em}
-.steps{list-style:none;counter-reset:s;margin-top:var(--s4);display:grid;gap:var(--s2)}
-.steps li{counter-increment:s;display:flex;align-items:center;gap:var(--s2);font-size:18px}
-.steps li::before{content:counter(s);font-family:var(--f-d);font-weight:800;font-size:32px;line-height:1;min-width:28px}
-.req form{display:grid;gap:var(--s2)}
-.blueprint .field label{color:rgba(255,255,255,.85)}
-.blueprint .input{border-color:#fff;color:#fff}
-.blueprint .input::placeholder{color:rgba(255,255,255,.55)}
-.blueprint .input:focus{background:rgba(255,255,255,.14)}
-.blueprint .input.bad{background:rgba(179,38,30,.45)}
-.blueprint .status{background:var(--sheet);color:var(--ink)}
-.drop{display:flex;align-items:center;gap:var(--s2);padding:var(--s3);border:2px dashed #fff;cursor:pointer;transition:background .2s}
-.drop:hover,.drop.drag{background:rgba(255,255,255,.14)}
+/* Photo request */
+.req-card{display:grid;background:#fff;color:var(--ink);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-h)}
+@media (min-width:1024px){.req-card{grid-template-columns:7fr 5fr}}
+.req-main{padding:var(--s4) var(--s3)}
+@media (min-width:768px){.req-main{padding:var(--s5)}}
+.req-main p{margin-top:var(--s2);color:var(--ink2);max-width:32em}
+.req-main form{display:grid;gap:var(--s2);margin-top:var(--s4)}
+.row2{display:grid;gap:var(--s2)}
+@media (min-width:640px){.row2{grid-template-columns:1fr 1fr}}
+.req-img{min-height:240px}
+.drop{display:flex;align-items:center;gap:var(--s2);padding:var(--s3);border:2px dashed #C3C9CF;border-radius:var(--r);background:var(--grey);cursor:pointer;transition:border-color .25s,background .25s}
+.drop:hover,.drop.drag{border-color:var(--orange);background:var(--tint)}
 .drop input{display:none}
-.drop svg{flex:none}
-.drop b{display:block;font-family:var(--f-d);font-weight:600;font-size:18px}
-.drop span{font-size:14px;color:rgba(255,255,255,.85)}
+.drop svg{flex:none;color:var(--orange)}
+.drop b{display:block;font-weight:600;font-size:16px}
+.drop span{font-size:14px;color:var(--ink2)}
 .files{list-style:none;display:grid;gap:8px}
-.files li{display:flex;align-items:center;gap:12px;padding:0 0 0 var(--s2);background:rgba(255,255,255,.14);font-size:16px}
+.files li{display:flex;align-items:center;gap:12px;padding:0 4px 0 var(--s2);border-radius:4px;background:var(--grey);font-size:14px}
 .files li span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.files li em{font-style:normal;font-size:14px;color:rgba(255,255,255,.8)}
-.files .rm{color:#fff}.files .rm:hover{color:var(--hl)}
+.files li em{font-style:normal;font-size:12px;color:var(--ink2)}
+.files .rm{width:36px;height:36px}
 
 /* About */
-.about-grid{display:grid;gap:var(--s5)}
+.about-grid{display:grid;gap:var(--s5);align-items:center}
+.about-grid > *{min-width:0}
 @media (min-width:1024px){.about-grid{grid-template-columns:5fr 6fr;gap:var(--s6)}}
-.stats{margin-top:var(--s4)}
-.leader{display:flex;align-items:baseline;gap:8px;padding:8px 0}
-.leader i{flex:1;min-width:16px;border-bottom:2px dotted var(--ink2);transform:translateY(-5px)}
-.leader b{font-family:var(--f-d);font-weight:800;font-size:28px;letter-spacing:-.03em;order:3}
-.principle{padding:var(--s3) 0;border-top:1px solid var(--ink)}
-.principle:first-child{border-top:2px solid var(--ink)}
-.principle p{margin-top:8px;color:var(--ink2);max-width:32em}
+.about-media{position:relative}
+.about-media .imgph{aspect-ratio:4/5;border-radius:var(--r)}
+.about-badge{position:absolute;right:var(--s2);bottom:var(--s2);background:var(--orange);color:#fff;padding:var(--s3);border-radius:var(--r);box-shadow:var(--shadow-h);min-width:150px}
+.about-badge b{display:block;font-size:40px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.about-badge span{display:block;margin-top:6px;font-size:14px;line-height:1.3}
+@media (min-width:1024px){.about-badge{right:-24px;bottom:var(--s4)}}
+.feats{display:grid;gap:var(--s3);margin-top:var(--s4)}
+@media (min-width:768px){.feats{grid-template-columns:1fr 1fr}}
+.feat{display:flex;gap:var(--s2);align-items:flex-start}
+.feat-ic{flex:none;width:44px;height:44px;display:grid;place-items:center;border-radius:4px;background:var(--tint);color:var(--orange)}
+.feat h3{font-size:17px}
+.feat p{margin-top:4px;font-size:15px;color:var(--ink2)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s2);margin-top:var(--s5);padding-top:var(--s4);border-top:1px solid var(--line)}
+.stat b{display:block;font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.04em;line-height:1.05;color:var(--orange)}
+.stat span{display:block;margin-top:4px;font-size:14px;color:var(--ink2)}
 
-/* Виды работ — оглавление */
-.toc{list-style:none;border-top:2px solid var(--ink)}
-.toc li{border-bottom:1px solid var(--ink)}
-.toc-row{width:100%;display:flex;align-items:baseline;gap:var(--s2);padding:var(--s3) 0;text-align:left;transition:padding .35s var(--ease),background .2s}
-.toc-row:hover{padding-left:var(--s2);background:var(--hl2)}
-.toc-n{min-width:40px;font-family:var(--f-d);font-weight:800;font-size:24px;color:var(--ink2);transition:color .2s}
-.toc-row:hover .toc-n{color:var(--red)}
-.toc-t{font-family:var(--f-d);font-weight:600;font-size:clamp(22px,3.4vw,40px);letter-spacing:-.025em;line-height:1.1}
-.toc-t{min-width:0}
-@media (max-width:639px){.toc-t{flex:1}}
-.toc-dots{display:none;flex:1;min-width:24px;border-bottom:2px dotted var(--rule);transform:translateY(-6px)}
-.toc-c{margin-left:auto;font-size:16px;color:var(--ink2);white-space:nowrap}
-@media (min-width:640px){.toc-dots{display:block}.toc-c{margin-left:0}}
+/* Виды работ */
+.svc-grid{display:grid;gap:var(--s3)}
+@media (min-width:640px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1024px){.svc-grid{grid-template-columns:repeat(3,1fr)}}
+.svc{position:relative;display:flex;flex-direction:column;gap:var(--s2);min-height:220px;padding:var(--s3);background:#fff;border-radius:var(--r);border-bottom:4px solid transparent;box-shadow:var(--shadow);text-align:left;transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .3s}
+.svc:hover{transform:translateY(-6px);box-shadow:var(--shadow-h);border-bottom-color:var(--orange)}
+.svc-n{width:48px;height:48px;display:grid;place-items:center;border-radius:4px;background:var(--tint);color:var(--orange-t);font-size:18px;font-weight:800;transition:background .3s,color .3s}
+.svc:hover .svc-n{background:var(--orange);color:#fff}
+.svc h3{font-size:22px;font-weight:700}
+.svc p{font-size:15px;color:var(--ink2)}
+.svc-go{margin-top:auto;align-self:flex-end;width:40px;height:40px;display:grid;place-items:center;border-radius:4px;background:var(--grey);transition:background .3s,color .3s}
+.svc:hover .svc-go{background:var(--orange);color:#fff}
 
-/* Team + gallery: чертёжные заглушки */
-.ph{position:relative;overflow:hidden;border:1px solid var(--ink);background:
-  linear-gradient(to top right,transparent calc(50% - .5px),var(--rule) calc(50% - .5px),var(--rule) calc(50% + .5px),transparent calc(50% + .5px)),
-  linear-gradient(to bottom right,transparent calc(50% - .5px),var(--rule) calc(50% - .5px),var(--rule) calc(50% + .5px),transparent calc(50% + .5px)),
-  var(--rule2)}
-.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.team{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s3) var(--s2)}
+/* Team */
+.team{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s2)}
 @media (min-width:1024px){.team{grid-template-columns:repeat(4,1fr);gap:var(--s3)}}
-.person .ph{aspect-ratio:4/5}
-.person figcaption{display:grid;gap:2px;padding-top:12px}
-.person b{font-family:var(--f-d);font-weight:600;font-size:18px;letter-spacing:-.01em}
-.person span{font-weight:500}
-.person em{font-style:normal;font-size:16px;color:var(--ink2)}
-.gallery{display:grid;gap:var(--s4) var(--s3)}
-.shot .ph{height:260px}
-.shot figcaption{display:flex;justify-content:space-between;gap:var(--s2);padding-top:12px}
-.shot b{font-family:var(--f-d);font-weight:600;font-size:16px}
-.shot span{color:var(--ink2);font-size:16px;text-align:right}
-@media (min-width:768px){
-  .gallery{grid-template-columns:repeat(12,1fr)}
-  .shot{grid-column:span 4}
-  .shot .ph{height:280px}
-  .shot.s1{grid-column:span 7}.shot.s2{grid-column:span 5}
-  .shot.s1 .ph,.shot.s2 .ph{height:380px}
-  .shot.s6{grid-column:span 12}.shot.s6 .ph{height:320px}
-}
+.person{background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);border-bottom:4px solid var(--orange)}
+.person .imgph{aspect-ratio:4/5}
+.person figcaption{display:grid;gap:2px;padding:var(--s2) var(--s2) var(--s3)}
+.person b{font-size:18px;font-weight:700;letter-spacing:-.01em}
+.person span{font-size:14px;font-weight:600;color:var(--orange-t)}
+.person em{font-style:normal;font-size:14px;color:var(--ink2)}
+
+/* Gallery */
+.gallery{display:grid;gap:var(--s2)}
+@media (min-width:640px){.gallery{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1024px){.gallery{grid-template-columns:repeat(3,1fr);gap:var(--s3)}}
+.shot{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.shot .imgph{aspect-ratio:4/3}
+.shot:hover .imgph img{transform:scale(1.06)}
+.shot figcaption{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:flex-end;gap:var(--s2);padding:var(--s4) var(--s2) var(--s2);background:linear-gradient(transparent,rgba(16,18,20,.82));color:#fff}
+.shot b{font-size:17px;font-weight:700}
+.shot span{font-size:14px;color:#D6DAE0;text-align:right}
+.shot::after{content:"";position:absolute;left:0;bottom:0;height:4px;width:0;background:var(--orange);transition:width .5s var(--ease)}
+.shot:hover::after{width:100%}
 
 /* Contacts */
-.contact-grid{display:grid;gap:var(--s5)}
+.contact-grid{display:grid;gap:var(--s5);align-items:start}
+.contact-grid > *{min-width:0}
 @media (min-width:1024px){.contact-grid{grid-template-columns:1fr 1fr;gap:var(--s6)}}
-.phone-big{display:block;margin-top:var(--s3);font-family:var(--f-d);font-weight:800;font-size:clamp(32px,7vw,64px);letter-spacing:-.04em;line-height:1;overflow-wrap:anywhere;transition:color .2s}
-.phone-big:hover{color:var(--red)}
-.dl{margin-top:var(--s4);border-top:2px solid var(--ink)}
-.dl-row{display:grid;grid-template-columns:120px 1fr;gap:var(--s2);padding:var(--s2) 0;border-bottom:1px solid var(--rule)}
-.dl-k{color:var(--ink2);font-size:16px;padding-top:10px}
+.dark .lead{color:#B6BCC4}
+.contacts-side{--ink2:#9AA1AB}
+.phone-big{display:block;margin-top:var(--s4);font-size:clamp(30px,6vw,52px);font-weight:800;letter-spacing:-.04em;line-height:1.05;overflow-wrap:anywhere;transition:color .2s}
+.phone-big:hover{color:#FF8A4C}
+.dl{margin-top:var(--s4)}
+.dl-row{display:grid;grid-template-columns:120px 1fr;gap:var(--s2);padding:var(--s2) 0;border-top:1px solid var(--line-d);align-items:center}
+.dl-k{color:#9AA1AB;font-size:14px}
 .msgrs{display:flex;flex-wrap:wrap;gap:8px}
-.dl-row a:not(.chip){border-bottom:2px solid var(--ink)}
-.cform{display:grid;gap:var(--s2);align-content:start}
-footer{padding-block:var(--s4);border-top:2px solid var(--ink);color:var(--ink2);font-size:16px}
+.dl-row a:not(.chip){border-bottom:1px solid #6A7078;transition:color .2s,border-color .2s}
+.dl-row a:not(.chip):hover{color:#FF8A4C;border-color:#FF8A4C}
+.cform{display:grid;gap:var(--s2);align-content:start;background:#fff;color:var(--ink);border-radius:var(--r);padding:var(--s3);border-top:4px solid var(--orange)}
+@media (min-width:768px){.cform{padding:var(--s4)}}
+.cform h3{font-size:24px;font-weight:700}
+footer{background:var(--dark2);padding-block:var(--s4);color:#9AA1AB;font-size:14px}
 .foot{display:flex;justify-content:space-between;gap:var(--s2);flex-wrap:wrap}
 
 /* Mobile bar */
-.mbar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:var(--s2);padding:12px var(--pad);background:var(--ink);color:var(--sheet);transform:translateY(100%);transition:transform .4s var(--ease)}
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:var(--s2);padding:12px var(--pad);background:var(--dark);color:#fff;border-top:3px solid var(--orange);transform:translateY(100%);transition:transform .45s var(--ease)}
 .mbar.show{transform:none}
-.mbar small{display:block;font-size:14px;opacity:.8;line-height:1.2}
-.mbar b{font-family:var(--f-d);font-weight:800;font-size:20px;letter-spacing:-.02em;line-height:1.2}
-.mbar .btn{min-height:48px;border-color:var(--sheet);padding:0 24px}
+.mbar small{display:block;font-size:12px;opacity:.7;line-height:1.2}
+.mbar b{font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1.2}
+.mbar .btn{min-height:46px;padding:0 22px}
 @media (min-width:1024px){.mbar{display:none}}
 
 /* Print */
@@ -319,11 +351,10 @@ footer{padding-block:var(--s4);border-top:2px solid var(--ink);color:var(--ink2)
   #printSheet th,#printSheet td{border:1px solid #888;padding:5pt 6pt;text-align:left;font-size:10pt}
   #printSheet td.r,#printSheet th.r{text-align:right}
   #printSheet .tot{font-size:14pt;font-weight:bold;text-align:right}
-  #printSheet .note{font-size:9pt;color:#444;margin-top:10pt;border:0;padding:0}
+  #printSheet .note{font-size:9pt;color:#444;margin-top:10pt;padding:0;border:0;background:none;display:block}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .pricesheet li{opacity:1}
   html{scroll-behavior:auto}
 }
 </style>
@@ -344,6 +375,7 @@ footer{padding-block:var(--s4);border-top:2px solid var(--ink);color:var(--ink2)
       </nav>
       <div class="nav-right">
         <a class="nav-phone" data-phone-link></a>
+        <a href="#calculator" class="btn btn-sm nav-cta">Рассчитать смету</a>
         <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span></button>
       </div>
     </div>
@@ -356,35 +388,40 @@ footer{padding-block:var(--s4);border-top:2px solid var(--ink);color:var(--ink2)
       <a href="#contacts">Контакты</a>
     </nav>
   </div>
-  <div class="ruler" id="ruler" aria-hidden="true"><svg></svg><i class="pointer" id="pointer"></i></div>
 </header>
 
 <main id="top">
   <section class="hero">
     <div class="container hero-grid">
-      <div>
-        <h1>Посчитайте ремонт сами. Мы проверим.</h1>
+      <div class="hero-copy">
+        <span class="eyebrow" data-cfg="tagline"></span>
+        <h1>Посчитайте стоимость ремонта и строительства сами</h1>
         <p class="lead" data-cfg="description"></p>
         <div class="hero-cta">
-          <a href="#calculator" class="btn btn-primary">Собрать смету</a>
-          <a href="#photo-request" class="link">Нет объёмов — пришлите фото</a>
+          <a href="#calculator" class="btn btn-arrow btn-lg">Рассчитать смету</a>
+          <a href="#photo-request" class="btn btn-ghost btn-lg">Оценить по фото</a>
         </div>
+        <ul class="hero-points">
+          <li>Расценки открыты, без регистрации</li>
+          <li>Смета копируется и печатается</li>
+          <li>Окончательную сумму подтверждаем после проверки объёмов</li>
+        </ul>
       </div>
-      <aside class="pricesheet" aria-label="Фрагмент прайса">
-        <p class="sheet-title">Из прайса</p>
-        <ul id="heroSheet"></ul>
-        <p class="sheet-foot">Все расценки — в калькуляторе ниже.</p>
-      </aside>
+      <div class="hero-media">
+        <div class="imgph hero-photo" data-img="hero"></div>
+        <div class="hero-badge"><b id="heroBadgeVal">10+</b><span id="heroBadgeLabel">лет на рынке</span></div>
+      </div>
     </div>
   </section>
 
-  <section class="sec" id="calculator">
+  <section class="sec grey" id="calculator">
     <div class="container">
       <div class="sec-head">
-        <h2>Калькулятор сметы</h2>
+        <span class="eyebrow">Калькулятор сметы</span>
+        <h2>Соберите смету за пару минут</h2>
         <p class="lead">Раскройте раздел, отметьте работы и укажите объём. Итог пересчитывается сразу.</p>
       </div>
-      <p class="note"><b>Материалы не входят в расчёт.</b> Вы можете купить их самостоятельно или поручить закупку нам за дополнительную плату. Стоимость материалов и доставки рассчитывается индивидуально и согласовывается с заказчиком.</p>
+      <p class="note"><span><b>Материалы не входят в расчёт.</b> Вы можете купить их самостоятельно или поручить закупку нам за дополнительную плату. Стоимость материалов и доставки рассчитывается индивидуально и согласовывается с заказчиком.</span></p>
 
       <div class="calc-grid">
         <div class="acc" id="accordion"></div>
@@ -397,7 +434,7 @@ footer{padding-block:var(--s4);border-top:2px solid var(--ink);color:var(--ink2)
           <div class="est-empty" id="estEmpty">Пока пусто. Раскройте раздел слева и отметьте нужные работы.</div>
           <ul class="est-list" id="estList"></ul>
           <div class="est-total">
-            <span>Итого</span>
+            <span>Итого по работам</span>
             <span class="total-val" id="totalVal">0 ₽</span>
           </div>
           <p class="est-note" id="factNote" hidden>Стоимость позиций «по факту» определяется по результатам работ и в итог не входит.</p>
@@ -412,7 +449,7 @@ footer{padding-block:var(--s4);border-top:2px solid var(--ink);color:var(--ink2)
             <div class="field"><label for="se-phone">Телефон</label><input class="input" id="se-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" maxlength="25"></div>
             <div class="field"><label for="se-comment">Комментарий</label><textarea class="input" id="se-comment" name="comment" rows="2" maxlength="1000"></textarea></div>
             <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <button class="btn btn-primary btn-block" type="submit">Отправить смету</button>
+            <button class="btn btn-block" type="submit">Отправить смету</button>
             <div class="status" id="seStatus" role="status" hidden></div>
           </form>
         </aside>
@@ -420,73 +457,87 @@ footer{padding-block:var(--s4);border-top:2px solid var(--ink);color:var(--ink2)
     </div>
   </section>
 
-  <section class="sec blueprint" id="photo-request">
-    <div class="container req">
-      <div>
-        <h2>Не знаете, какие работы вам нужны?</h2>
-        <p>Отправьте фотографии, видео или чертёж объекта — мы самостоятельно оценим необходимые работы и подготовим предварительную смету.</p>
-        <ol class="steps">
-          <li>Прикрепите фото, видео или чертёж</li>
-          <li>Оставьте телефон и пару слов о задаче</li>
-          <li>Мы свяжемся и пришлём смету</li>
-        </ol>
+  <section class="sec dark" id="photo-request">
+    <div class="container">
+      <div class="req-card">
+        <div class="req-main">
+          <span class="eyebrow">Индивидуальный расчёт</span>
+          <h2>Не знаете, какие работы вам нужны?</h2>
+          <p>Отправьте фотографии, видео или чертёж объекта — мы самостоятельно оценим необходимые работы и подготовим предварительную смету.</p>
+          <form id="requestForm" novalidate>
+            <label class="drop" id="drop">
+              <input type="file" id="fileInput" multiple>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>
+              <div><b>Прикрепить файлы</b><span id="dropHint"></span></div>
+            </label>
+            <ul class="files" id="fileList"></ul>
+            <div class="row2">
+              <div class="field"><label for="rq-name">Имя</label><input class="input" id="rq-name" name="name" autocomplete="name" maxlength="80"></div>
+              <div class="field"><label for="rq-phone">Телефон</label><input class="input" id="rq-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" maxlength="25"></div>
+            </div>
+            <div class="field"><label for="rq-comment">Комментарий</label><textarea class="input" id="rq-comment" name="comment" rows="3" maxlength="1500" placeholder="Что нужно сделать, адрес, желаемые сроки"></textarea></div>
+            <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <button class="btn btn-arrow btn-lg" type="submit">Отправить на расчёт</button>
+            <div class="status" id="rqStatus" role="status" hidden></div>
+          </form>
+        </div>
+        <div class="imgph req-img" data-img="request"></div>
       </div>
-      <form id="requestForm" novalidate>
-        <label class="drop" id="drop">
-          <input type="file" id="fileInput" multiple>
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>
-          <div><b>Прикрепить файлы</b><span id="dropHint"></span></div>
-        </label>
-        <ul class="files" id="fileList"></ul>
-        <div class="field"><label for="rq-name">Имя</label><input class="input" id="rq-name" name="name" autocomplete="name" maxlength="80"></div>
-        <div class="field"><label for="rq-phone">Телефон</label><input class="input" id="rq-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" maxlength="25"></div>
-        <div class="field"><label for="rq-comment">Комментарий</label><textarea class="input" id="rq-comment" name="comment" rows="3" maxlength="1500" placeholder="Что нужно сделать, адрес, желаемые сроки"></textarea></div>
-        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <button class="btn btn-light" type="submit">Отправить на расчёт</button>
-        <div class="status" id="rqStatus" role="status" hidden></div>
-      </form>
     </div>
   </section>
 
   <section class="sec" id="about">
     <div class="container about-grid">
+      <div class="about-media">
+        <div class="imgph" data-img="about"></div>
+        <div class="about-badge"><b id="aboutBadgeVal">300+</b><span id="aboutBadgeLabel">объектов сдано</span></div>
+      </div>
       <div>
+        <span class="eyebrow">О компании</span>
         <h2 id="aboutTitle"></h2>
         <p class="lead" id="aboutText"></p>
+        <div class="feats" id="principles"></div>
         <div class="stats" id="aboutStats"></div>
       </div>
-      <div id="principles"></div>
     </div>
   </section>
 
-  <section class="sec" id="services">
+  <section class="sec grey" id="services">
     <div class="container">
       <div class="sec-head">
-        <h2>Виды работ</h2>
+        <span class="eyebrow">Виды работ</span>
+        <h2>Чем мы занимаемся</h2>
         <p class="lead">Выберите направление — откроем его в калькуляторе.</p>
       </div>
-      <ul class="toc" id="servicesGrid"></ul>
+      <div class="svc-grid" id="servicesGrid"></div>
     </div>
   </section>
 
   <section class="sec" id="team">
     <div class="container">
-      <div class="sec-head"><h2>Команда</h2></div>
+      <div class="sec-head">
+        <span class="eyebrow">Наша команда</span>
+        <h2>Люди, которые делают работу</h2>
+      </div>
       <div class="team" id="teamGrid"></div>
     </div>
   </section>
 
-  <section class="sec" id="works">
+  <section class="sec grey" id="works">
     <div class="container">
-      <div class="sec-head"><h2>Примеры работ</h2></div>
+      <div class="sec-head">
+        <span class="eyebrow">Примеры работ</span>
+        <h2>Выполненные проекты</h2>
+      </div>
       <div class="gallery" id="gallery"></div>
     </div>
   </section>
 
-  <section class="sec" id="contacts">
+  <section class="sec dark" id="contacts">
     <div class="container contact-grid">
-      <div>
-        <h2>Контакты</h2>
+      <div class="contacts-side">
+        <span class="eyebrow">Контакты</span>
+        <h2>Свяжитесь с нами</h2>
         <a class="phone-big" data-phone-link></a>
         <div class="dl">
           <div class="dl-row"><span class="dl-k">Мессенджеры</span><div class="msgrs" id="msgrs"></div></div>
@@ -500,7 +551,7 @@ footer{padding-block:var(--s4);border-top:2px solid var(--ink);color:var(--ink2)
         <div class="field"><label for="ct-phone">Телефон</label><input class="input" id="ct-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" maxlength="25"></div>
         <div class="field"><label for="ct-comment">Сообщение</label><textarea class="input" id="ct-comment" name="comment" rows="3" maxlength="1500"></textarea></div>
         <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <button class="btn btn-primary" type="submit">Отправить</button>
+        <button class="btn btn-arrow btn-lg" type="submit">Отправить</button>
         <div class="status" id="ctStatus" role="status" hidden></div>
       </form>
     </div>
@@ -516,7 +567,7 @@ footer{padding-block:var(--s4);border-top:2px solid var(--ink);color:var(--ink2)
 
 <div class="mbar" id="mbar">
   <div><small>Смета</small><b id="mbarTotal">0 ₽</b></div>
-  <a href="#estimate" class="btn btn-primary">Открыть</a>
+  <a href="#estimate" class="btn">Открыть</a>
 </div>
 
 <div id="printSheet"></div>
@@ -528,6 +579,14 @@ footer{padding-block:var(--s4);border-top:2px solid var(--ink);color:var(--ink2)
    Все значения ВРЕМЕННЫЕ.
    ============================================================ */
 window.SITE_CONFIG = {
+  /* Фотографии: впишите путь к файлу ("img/hero.jpg") — вместо серой заглушки появится фото.
+     Пустая строка = заглушка. */
+  images: {
+    hero: "",      // первый экран (лучше горизонтальное фото, например рабочий на объекте)
+    about: "",     // блок «О компании» (вертикальное 4:5)
+    request: ""    // блок «Не знаете, какие работы вам нужны?»
+  },
+
   company: {
     name: "СтройМастер",                       // название компании (временное)
     tagline: "Ремонт, строительство, монтаж и отделка",
@@ -598,7 +657,526 @@ window.SITE_CONFIG = {
   ]
 };
 </script>
-<script src="catalog.js"></script>
+<script>
+/* ============================================================
+   КАТАЛОГ УСЛУГ КАЛЬКУЛЯТОРА
+   Источник: смета по видам работ (CSV). Все цены ВРЕМЕННЫЕ.
+
+   Как редактировать:
+   • Новая категория — добавьте объект в categories.
+   • Новая услуга    — добавьте объект в items нужной категории.
+   • Цена            — поле price (число, в валюте currency).
+   • Цена «по факту» — price: null и priceNote: "по факту":
+                       позиция попадает в смету, но в итог не входит.
+   • id              — уникальный, латиницей/цифрами, без пробелов.
+   • step (необязательно) — шаг кнопок +/−  (по умолчанию 1).
+   ============================================================ */
+window.CATALOG = {
+  "currency": "₽",
+  "categories": [
+    {
+      "id": "cat-1",
+      "title": "Демонтаж и подготовка",
+      "items": [
+        {
+          "id": "s-1-1",
+          "name": "Демонтаж (снятие) радиаторов отопления",
+          "unit": "шт.",
+          "price": 1785
+        },
+        {
+          "id": "s-1-2",
+          "name": "Вынос мусора",
+          "unit": "м³",
+          "price": null,
+          "priceNote": "по факту"
+        },
+        {
+          "id": "s-1-3",
+          "name": "Подъем материалов (лифт/без лифта)",
+          "unit": "кг / этаж",
+          "price": null,
+          "priceNote": "по факту"
+        }
+      ]
+    },
+    {
+      "id": "cat-2",
+      "title": "Стены и потолки (черновые)",
+      "items": [
+        {
+          "id": "s-2-1",
+          "name": "Грунтовка стен/потолка (1 слой)",
+          "unit": "м²",
+          "price": 35
+        },
+        {
+          "id": "s-2-2",
+          "name": "Установка маяков для штукатурки",
+          "unit": "м²",
+          "price": 100
+        },
+        {
+          "id": "s-2-3",
+          "name": "Штукатурка стен по маякам (до 3 см)",
+          "unit": "м²",
+          "price": 380
+        },
+        {
+          "id": "s-2-4",
+          "name": "Штукатурка внутренних стен (санузел)",
+          "unit": "м²",
+          "price": 360
+        },
+        {
+          "id": "s-2-5",
+          "name": "Шпаклевка стен (финишная/базовая)",
+          "unit": "м²",
+          "price": 400
+        },
+        {
+          "id": "s-2-6",
+          "name": "Шпаклевка и шлифовка откосов",
+          "unit": "м.п.",
+          "price": 245
+        },
+        {
+          "id": "s-2-7",
+          "name": "Штукатурка дверного проема",
+          "unit": "компл.",
+          "price": 2000
+        },
+        {
+          "id": "s-2-8",
+          "name": "Шпаклевка, шлифовка потолка",
+          "unit": "м²",
+          "price": 255
+        },
+        {
+          "id": "s-2-9",
+          "name": "Ошкуривание (шкурка) стен/потолка",
+          "unit": "м²",
+          "price": 100
+        },
+        {
+          "id": "s-2-10",
+          "name": "Штробление под трубы",
+          "unit": "м.п.",
+          "price": 295
+        }
+      ]
+    },
+    {
+      "id": "cat-3",
+      "title": "Чистовая отделка",
+      "items": [
+        {
+          "id": "s-3-1",
+          "name": "Устройство потолка из ГКЛ",
+          "unit": "м²",
+          "price": 415
+        },
+        {
+          "id": "s-3-2",
+          "name": "Устройство потолочных коробов из ГКЛ",
+          "unit": "м.п.",
+          "price": 430
+        },
+        {
+          "id": "s-3-3",
+          "name": "Оклейка потолков флизелином/обоями",
+          "unit": "м²",
+          "price": 173
+        },
+        {
+          "id": "s-3-4",
+          "name": "Монтаж натяжного потолка",
+          "unit": "м²",
+          "price": 580
+        },
+        {
+          "id": "s-3-5",
+          "name": "Монтаж потолка типа \"Армстронг\"",
+          "unit": "м²",
+          "price": 350
+        },
+        {
+          "id": "s-3-6",
+          "name": "Монтаж потолочных карнизов (галетели)",
+          "unit": "м.п.",
+          "price": 305
+        },
+        {
+          "id": "s-3-7",
+          "name": "Оклейка стен обоями (от 80 см)",
+          "unit": "м²",
+          "price": 240
+        },
+        {
+          "id": "s-3-8",
+          "name": "Покраска стен/потолка в/д краской (2 слоя)",
+          "unit": "м²",
+          "price": 180
+        },
+        {
+          "id": "s-3-9",
+          "name": "Облицовка стен санузла плиткой",
+          "unit": "м²",
+          "price": 835
+        },
+        {
+          "id": "s-3-10",
+          "name": "Укладка напольной плитки",
+          "unit": "м²",
+          "price": 785
+        },
+        {
+          "id": "s-3-11",
+          "name": "Укладка керамогранита (600х600)",
+          "unit": "м²",
+          "price": 2900
+        },
+        {
+          "id": "s-3-12",
+          "name": "Укладка ламината / паркетной доски",
+          "unit": "м²",
+          "price": 450
+        },
+        {
+          "id": "s-3-13",
+          "name": "Подложка под ламинат",
+          "unit": "м²",
+          "price": 50
+        },
+        {
+          "id": "s-3-14",
+          "name": "Монтаж плинтуса (пластик/МДФ)",
+          "unit": "м.п.",
+          "price": 135
+        },
+        {
+          "id": "s-3-15",
+          "name": "Запил керамогранита под 45 град.",
+          "unit": "м.п.",
+          "price": 2800
+        },
+        {
+          "id": "s-3-16",
+          "name": "Затирка швов плитки",
+          "unit": "м²",
+          "price": 500
+        },
+        {
+          "id": "s-3-17",
+          "name": "Монтаж экрана из плитки на ванну",
+          "unit": "м.п.",
+          "price": 2600
+        },
+        {
+          "id": "s-3-18",
+          "name": "Монтаж декоративных панелей",
+          "unit": "шт.",
+          "price": 980
+        }
+      ]
+    },
+    {
+      "id": "cat-4",
+      "title": "Сантехника",
+      "items": [
+        {
+          "id": "s-4-1",
+          "name": "Разводка труб ГВС и ХВС",
+          "unit": "м.п.",
+          "price": 260
+        },
+        {
+          "id": "s-4-2",
+          "name": "Разводка труб канализации",
+          "unit": "м.п.",
+          "price": 190
+        },
+        {
+          "id": "s-4-3",
+          "name": "Монтаж коллекторов ГВС и ХВС",
+          "unit": "шт.",
+          "price": 1265
+        },
+        {
+          "id": "s-4-4",
+          "name": "Монтаж счетчиков воды",
+          "unit": "шт.",
+          "price": 650
+        },
+        {
+          "id": "s-4-5",
+          "name": "Установка инсталляции и унитаза (подвесной)",
+          "unit": "шт.",
+          "price": 4200
+        },
+        {
+          "id": "s-4-6",
+          "name": "Установка обычного унитаза",
+          "unit": "шт.",
+          "price": 1100
+        },
+        {
+          "id": "s-4-7",
+          "name": "Установка ванны (гидромассаж)",
+          "unit": "шт.",
+          "price": 4600
+        },
+        {
+          "id": "s-4-8",
+          "name": "Установка душевой кабины / перегородки",
+          "unit": "шт.",
+          "price": 7000
+        },
+        {
+          "id": "s-4-9",
+          "name": "Установка смесителя (душ/раковина)",
+          "unit": "шт.",
+          "price": 450
+        },
+        {
+          "id": "s-4-10",
+          "name": "Установка фильтров",
+          "unit": "шт.",
+          "price": 690
+        },
+        {
+          "id": "s-4-11",
+          "name": "Установка раковины / умывальника",
+          "unit": "шт.",
+          "price": 1150
+        },
+        {
+          "id": "s-4-12",
+          "name": "Установка гигиенического душа",
+          "unit": "шт.",
+          "price": 1500
+        },
+        {
+          "id": "s-4-13",
+          "name": "Установка полотенцесушителя (электро)",
+          "unit": "шт.",
+          "price": 3000
+        }
+      ]
+    },
+    {
+      "id": "cat-5",
+      "title": "Электрика",
+      "items": [
+        {
+          "id": "s-5-1",
+          "name": "Монтаж электропроводки (ТВ, интернет)",
+          "unit": "м.п.",
+          "price": 110
+        },
+        {
+          "id": "s-5-2",
+          "name": "Устройство временного освещения",
+          "unit": "шт.",
+          "price": 1230
+        },
+        {
+          "id": "s-5-3",
+          "name": "Установка подрозетников",
+          "unit": "шт.",
+          "price": 280
+        },
+        {
+          "id": "s-5-4",
+          "name": "Установка розеток, выключателей",
+          "unit": "шт.",
+          "price": 180
+        },
+        {
+          "id": "s-5-5",
+          "name": "Монтаж точечных светильников",
+          "unit": "шт.",
+          "price": 245
+        },
+        {
+          "id": "s-5-6",
+          "name": "Монтаж люстры",
+          "unit": "шт.",
+          "price": 950
+        },
+        {
+          "id": "s-5-7",
+          "name": "Монтаж потолочных светильников",
+          "unit": "шт.",
+          "price": 350
+        },
+        {
+          "id": "s-5-8",
+          "name": "Установка щита (до 5 автоматов)",
+          "unit": "шт.",
+          "price": 6000
+        },
+        {
+          "id": "s-5-9",
+          "name": "Монтаж регулятора теплого пола",
+          "unit": "шт.",
+          "price": 800
+        },
+        {
+          "id": "s-5-10",
+          "name": "Укладка нагревательного элемента (теплый пол)",
+          "unit": "м²",
+          "price": 1200
+        },
+        {
+          "id": "s-5-11",
+          "name": "Комплекс черновой электрики (на 5 м²)",
+          "unit": "компл.",
+          "price": 2400
+        }
+      ]
+    },
+    {
+      "id": "cat-6",
+      "title": "Фундамент и земляные работы",
+      "items": [
+        {
+          "id": "s-6-1",
+          "name": "Выноска осей, планировка, разработка котлована",
+          "unit": "м³",
+          "price": 800
+        },
+        {
+          "id": "s-6-2",
+          "name": "Изготовление опалубки",
+          "unit": "м³",
+          "price": 3000
+        },
+        {
+          "id": "s-6-3",
+          "name": "Изготовление подготовки из бетона (подушка)",
+          "unit": "м³",
+          "price": 1500
+        },
+        {
+          "id": "s-6-4",
+          "name": "Армирование фундамента",
+          "unit": "кг",
+          "price": 5
+        },
+        {
+          "id": "s-6-5",
+          "name": "Заливка фундамента",
+          "unit": "м³",
+          "price": 2100
+        },
+        {
+          "id": "s-6-6",
+          "name": "Наплавная гидроизоляция",
+          "unit": "м²",
+          "price": 250
+        },
+        {
+          "id": "s-6-7",
+          "name": "Укладка утеплителя Пеноплекс 50мм / 150мм",
+          "unit": "м²",
+          "price": 250
+        },
+        {
+          "id": "s-6-8",
+          "name": "Изготовление выравнивающей стяжки",
+          "unit": "м²",
+          "price": 350
+        },
+        {
+          "id": "s-6-9",
+          "name": "Заливка стяжки пола по маякам (5-7 см)",
+          "unit": "м²",
+          "price": 450
+        },
+        {
+          "id": "s-6-10",
+          "name": "Укладка кафеля/керамогранита",
+          "unit": "м²",
+          "price": 700
+        },
+        {
+          "id": "s-6-11",
+          "name": "Выемка грунта под колодцы мех. способом",
+          "unit": "м³",
+          "price": 1800
+        },
+        {
+          "id": "s-6-12",
+          "name": "Монтаж колодца из ж/б (1500мм)",
+          "unit": "шт.",
+          "price": 12800
+        },
+        {
+          "id": "s-6-13",
+          "name": "Прокладка труб (32мм, 110мм, 160мм, 20мм, 16мм, 50мм)",
+          "unit": "м.п.",
+          "price": 350
+        },
+        {
+          "id": "s-6-14",
+          "name": "Установка люков",
+          "unit": "шт.",
+          "price": 1200
+        },
+        {
+          "id": "s-6-15",
+          "name": "Установка запорной арматуры",
+          "unit": "шт.",
+          "price": 400
+        },
+        {
+          "id": "s-6-16",
+          "name": "Установка фитингов / стремянок",
+          "unit": "шт.",
+          "price": 350
+        }
+      ]
+    },
+    {
+      "id": "cat-7",
+      "title": "Кровля и металлоконструкции",
+      "items": [
+        {
+          "id": "s-7-1",
+          "name": "Монтаж кровли из профлиста",
+          "unit": "м²",
+          "price": 700
+        },
+        {
+          "id": "s-7-2",
+          "name": "Монтаж гидроизоляции / пароизоляции",
+          "unit": "м²",
+          "price": 80
+        },
+        {
+          "id": "s-7-3",
+          "name": "Монтаж сварных металлоконструкций",
+          "unit": "тонна",
+          "price": 22000
+        },
+        {
+          "id": "s-7-4",
+          "name": "Обшивка ГКЛ по металл. каркасу",
+          "unit": "м²",
+          "price": 600
+        },
+        {
+          "id": "s-7-5",
+          "name": "Кирпичная кладка",
+          "unit": "м³",
+          "price": 1000
+        }
+      ]
+    }
+  ]
+};
+</script>
 <script>
 (function(){
 'use strict';
@@ -667,24 +1245,33 @@ function applyConfig(){
   document.title = (c.name ? c.name+' — ' : '') + 'калькулятор сметы на ремонт и строительство';
   $('#year').textContent = new Date().getFullYear();
 
-  var ab = CFG.about || {};
+  var imgs = CFG.images || {};
+  $$('[data-img]').forEach(function(el){
+    var src = imgs[el.dataset.img];
+    if(src){ el.style.backgroundImage = 'url("'+String(src).replace(/"/g,'%22')+'")'; el.classList.add('has-img'); }
+  });
+
+  var ab = CFG.about || {}, st = ab.stats || [];
   $('#aboutTitle').textContent = ab.title || '';
   $('#aboutText').textContent = ab.text || '';
-  $('#aboutStats').innerHTML = (ab.stats||[]).map(function(s){
-    return '<div class="leader"><span>'+esc(s.label)+'</span><i></i><b>'+esc(s.value)+'</b></div>';
+  if(st[0]){ $('#heroBadgeVal').textContent = st[0].value; $('#heroBadgeLabel').textContent = st[0].label; }
+  if(st[1]){ $('#aboutBadgeVal').textContent = st[1].value; $('#aboutBadgeLabel').textContent = st[1].label; }
+  $('#aboutStats').innerHTML = st.map(function(s){
+    return '<div class="stat"><b>'+esc(s.value)+'</b><span>'+esc(s.label)+'</span></div>';
   }).join('');
+  var TICK = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"><path d="M5 12l5 5 9-10"/></svg>';
   $('#principles').innerHTML = (ab.principles||[]).map(function(p){
-    return '<div class="principle"><h3>'+esc(p.title)+'</h3><p>'+esc(p.text)+'</p></div>';
+    return '<div class="feat"><span class="feat-ic">'+TICK+'</span><div><h3>'+esc(p.title)+'</h3><p>'+esc(p.text)+'</p></div></div>';
   }).join('');
 
   $('#teamGrid').innerHTML = (CFG.team||[]).map(function(p){
     var img = p.photo ? '<img src="'+esc(p.photo)+'" alt="'+esc(p.name)+'" loading="lazy">' : '';
-    return '<figure class="person"><div class="ph">'+img+'</div><figcaption><b>'+esc(p.name)+'</b><span>'+esc(p.role)+'</span><em>'+esc(p.note||'')+'</em></figcaption></figure>';
+    return '<figure class="person"><div class="imgph">'+img+'</div><figcaption><b>'+esc(p.name)+'</b><span>'+esc(p.role)+'</span><em>'+esc(p.note||'')+'</em></figcaption></figure>';
   }).join('');
 
-  $('#gallery').innerHTML = (CFG.works||[]).map(function(w,i){
+  $('#gallery').innerHTML = (CFG.works||[]).map(function(w){
     var img = w.image ? '<img src="'+esc(w.image)+'" alt="'+esc(w.title)+'" loading="lazy">' : '';
-    return '<figure class="shot s'+(i+1)+'"><div class="ph">'+img+'</div><figcaption><b>'+esc(w.title)+'</b><span>'+esc(w.text||'')+'</span></figcaption></figure>';
+    return '<figure class="shot"><div class="imgph">'+img+'</div><figcaption><b>'+esc(w.title)+'</b><span>'+esc(w.text||'')+'</span></figcaption></figure>';
   }).join('');
 
   $('#msgrs').innerHTML = (CFG.messengers||[]).map(function(m){
@@ -697,11 +1284,14 @@ function applyConfig(){
   $('#fileInput').accept = up.accept || '';
   $('#dropHint').textContent = 'Фото, видео, чертежи и документы · до ' + (up.maxFiles||10) + ' файлов, каждый до ' + (up.maxFileSizeMB||50) + ' МБ';
 
+  var GO = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg>';
   $('#servicesGrid').innerHTML = cats.map(function(c,i){
     var n = c.items.length;
-    return '<li><button type="button" class="toc-row" data-open-cat="'+esc(c.id)+'">' +
-      '<span class="toc-n">'+(i+1)+'</span><span class="toc-t">'+esc(c.title)+'</span><i class="toc-dots"></i>' +
-      '<span class="toc-c">'+n+' '+plural(n,['услуга','услуги','услуг'])+'</span></button></li>';
+    return '<button type="button" class="svc" data-open-cat="'+esc(c.id)+'">' +
+      '<span class="svc-n">'+String(i+1).padStart(2,'0')+'</span>' +
+      '<h3>'+esc(c.title)+'</h3>' +
+      '<p>'+n+' '+plural(n,['услуга','услуги','услуг'])+(c.description?' · '+esc(c.description):'')+'</p>' +
+      '<span class="svc-go">'+GO+'</span></button>';
   }).join('');
 }
 function plural(n,f){ var a=n%10,b=n%100; return (a===1&&b!==11)?f[0]:(a>=2&&a<=4&&(b<10||b>=20))?f[1]:f[2]; }
@@ -719,7 +1309,7 @@ function stepperHtml(id){
 
 function buildAccordion(){
   var root = $('#accordion');
-  if(!cats.length){ root.innerHTML = '<div class="empty-cat">Каталог услуг пуст. Добавьте категории и услуги в файл catalog.js.</div>'; return; }
+  if(!cats.length){ root.innerHTML = '<div class="empty-cat">Каталог услуг пуст. Добавьте категории и услуги в блок window.CATALOG в конце файла.</div>'; return; }
   root.innerHTML = cats.map(function(c,ci){
     var items = c.items.map(function(it){
       return '<div class="item" data-item="'+esc(it.id)+'">' +
@@ -1075,7 +1665,8 @@ if('IntersectionObserver' in window){
 
 /* ================== Линейка со скролл-указателем ================== */
 function buildRuler(){
-  var r = $('#ruler'), svg = $('svg',r), w = Math.floor(r.clientWidth), h = r.clientHeight, p = '';
+  var r = $('#ruler'); if(!r) return;
+  var svg = $('svg',r), w = Math.floor(r.clientWidth), h = r.clientHeight, p = '';
   for(var x=0; x<=w; x+=10){
     var big = x%100===0, mid = x%50===0, len = big?14:mid?10:6;
     p += '<line x1="'+(x+.5)+'" y1="0" x2="'+(x+.5)+'" y2="'+len+'"/>';
@@ -1084,7 +1675,8 @@ function buildRuler(){
   svg.setAttribute('width',w); svg.setAttribute('height',h); svg.innerHTML = p;
 }
 function movePointer(){
-  var r = $('#ruler'), max = document.documentElement.scrollHeight - window.innerHeight;
+  var r = $('#ruler'); if(!r) return;
+  var max = document.documentElement.scrollHeight - window.innerHeight;
   var k = max>0 ? Math.min(1,Math.max(0,window.scrollY/max)) : 0;
   $('#pointer').style.transform = 'translateX('+Math.round(k*(r.clientWidth-2))+'px)';
 }
