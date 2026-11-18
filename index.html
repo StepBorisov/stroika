@@ -1712,7 +1712,7 @@ function select(id, on, focus){
     order = order.filter(function(x){return x!==id;});
   }
   refresh(id);
-  if(on && focus){ var i = $('.item[data-item="'+cssEsc(id)+'"] .qty'); if(i) i.focus(); }
+  if(on && focus){ var i = $('.item[data-item="'+cssEsc(id)+'"] .qty'); if(i) i.focus({preventScroll:true}); }
 }
 function setRaw(id, raw, src){
   var st = state[id]; if(!st) return;
@@ -1871,23 +1871,31 @@ Array.prototype.forEach.call(document.querySelectorAll('input[type=tel]'), funct
 });
 (function(){
   function isField(el){ return el && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName); }
+  var timer = null;
   function reveal(el){
-    if(!el || !el.scrollIntoView) return;
+    if(!el || !el.getBoundingClientRect) return;
     var box = el.closest('.item,.est-li,.field') || el;
-    box.scrollIntoView({block:'center', behavior:'smooth'});
+    var r = box.getBoundingClientRect();
+    var vv = window.visualViewport;
+    var top = 70, bottom = vv ? vv.height : window.innerHeight;   // видимая область над клавиатурой
+    if(r.top >= top && r.bottom <= bottom - 12) return;           // уже в поле зрения — не двигаем
+    var delta = (r.top + r.bottom)/2 - (top + bottom)/2;
+    window.scrollBy({top:delta, behavior:'smooth'});
+  }
+  function schedule(ms){
+    clearTimeout(timer);
+    timer = setTimeout(function(){ if(isField(document.activeElement)) reveal(document.activeElement); }, ms);
   }
   document.addEventListener('focusin', function(e){
     if(!isField(e.target)) return;
     document.body.classList.add('typing');
-    setTimeout(function(){ reveal(e.target); }, 350);
+    schedule(400);
   });
   document.addEventListener('focusout', function(){
     setTimeout(function(){ if(!isField(document.activeElement)) document.body.classList.remove('typing'); }, 50);
   });
   if(window.visualViewport){
-    window.visualViewport.addEventListener('resize', function(){
-      if(isField(document.activeElement)) reveal(document.activeElement);
-    });
+    window.visualViewport.addEventListener('resize', function(){ schedule(200); });
   }
 })();
 var CH_NAMES = {telegram:'Telegram', whatsapp:'WhatsApp', max:'Max', email:'электронную почту'};
