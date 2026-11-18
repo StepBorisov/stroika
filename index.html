@@ -39,12 +39,12 @@ a{color:inherit;text-decoration:none}
 @media (min-width:1024px){.sec{padding-block:var(--s6)}}
 
 h1,h2,h3,h4{font-weight:600;letter-spacing:-.015em;line-height:1.2}
-h1{font-size:clamp(28px,3.6vw,40px);letter-spacing:-.02em;line-height:1.15}
-h2{font-size:clamp(24px,2.7vw,32px)}
+h1{font-size:clamp(22px,3.6vw,40px);letter-spacing:-.02em;line-height:1.15}
+h2{font-size:clamp(20px,2.7vw,32px)}
 h3{font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
 .lead{font-size:18px;color:var(--ink2);max-width:34em;margin-top:var(--s2)}
-.eyebrow{display:inline-flex;align-items:center;gap:10px;margin-bottom:var(--s2);font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-t)}
-.eyebrow::before{content:"";width:24px;height:3px;background:var(--orange)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:var(--s2);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--orange-t)}
+.eyebrow::before{content:"";width:16px;height:2px;background:var(--orange)}
 .dark .eyebrow,.hero .eyebrow{color:#FF8A4C}
 .sec-head{max-width:720px;margin-bottom:var(--s4)}
 
@@ -189,7 +189,9 @@ textarea.input{min-height:104px;resize:vertical}
 @media (max-width:639px){
   .item-top{grid-template-columns:28px 1fr}
   .item-price{grid-column:2;padding-top:0;margin-top:-6px;margin-bottom:6px}
-  .item-qty,.hint{margin-left:40px}
+  .item-qty,.hint{margin-left:0}
+  .item .item-qty .rm{display:none}
+  .item .stepper input{width:64px}
   .acc-btn{grid-template-columns:32px minmax(0,1fr) auto 20px;gap:12px;padding-inline:12px}
   .acc-n{width:32px;height:32px}
 }
@@ -303,8 +305,16 @@ textarea.input{min-height:104px;resize:vertical}
 @media (min-width:640px){.gallery{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:1024px){.gallery{grid-template-columns:repeat(3,1fr);gap:var(--s3)}}
 .shot{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
-.shot .imgph{aspect-ratio:4/3}
-.shot:hover .imgph img{transform:scale(1.06)}
+.shot .track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;outline-offset:-2px}
+.shot .track::-webkit-scrollbar{display:none}
+.shot .slide{flex:0 0 100%;scroll-snap-align:center;aspect-ratio:4/3}
+.shot .slide:nth-child(even){background-color:#CFD4D9}
+.sl-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:34px;height:34px;border:0;border-radius:3px;background:rgba(29,32,35,.72);color:#fff;font-size:22px;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0 0 3px}
+.sl-btn:hover{background:var(--orange)}
+.sl-btn.prev{left:8px}.sl-btn.next{right:8px}
+.sl-count{position:absolute;top:8px;right:8px;z-index:2;padding:2px 7px;border-radius:3px;background:rgba(29,32,35,.72);color:#fff;font-size:12px;font-weight:500}
+.shot figcaption{pointer-events:none}
+.shot:hover .imgph img{transform:none}
 .shot figcaption{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:flex-end;gap:var(--s2);padding:var(--s4) var(--s2) var(--s2);background:linear-gradient(transparent,rgba(16,18,20,.82));color:#fff}
 .shot b{font-size:17px;font-weight:700}
 .shot span{font-size:14px;color:#D6DAE0;text-align:right}
@@ -339,6 +349,219 @@ footer{background:var(--dark2);padding-block:var(--s4);color:#9AA1AB;font-size:1
 .mbar .btn{min-height:46px;padding:0 22px}
 @media (min-width:1024px){.mbar{display:none}}
 
+/* Компактность + акцентный курсив */
+.lead,.hero-badge span,.about-badge span,.stat span,.person span,.shot span,.svc p,.acc-title small{font-style:italic;font-weight:400}
+.person span{font-weight:500}
+.lead{font-size:17px;line-height:1.5}
+.sec{padding-block:48px}
+@media (min-width:1024px){.sec{padding-block:72px}}
+.sec-head{margin-bottom:var(--s3)}
+.eyebrow{margin-bottom:12px}
+.btn{min-height:46px;padding:0 22px;font-size:14px}
+.btn-lg{min-height:52px;padding:0 28px}
+.btn-sm{min-height:40px;padding:0 18px;font-size:14px}
+.input{min-height:46px;padding:10px 14px;font-size:15px}
+textarea.input{min-height:88px}
+.field label{font-size:13px}
+.hero-copy{padding-top:var(--s4)}
+@media (min-width:1024px){.hero-copy{padding-block:64px}.hero-media{min-height:480px}}
+.hero .lead{margin-top:var(--s2)}
+.hero-cta{margin-top:var(--s3)}
+.hero-points{margin-top:var(--s3);gap:8px}
+.hero-points li{font-size:14px}
+.hero-badge{padding:16px 20px}
+.hero-badge b{font-size:36px}
+.hero-badge span{font-size:14px}
+/* Калькулятор */
+.note{padding:12px 16px;margin-bottom:var(--s3);font-size:14px}
+.calc-grid{gap:var(--s3)}
+@media (min-width:1024px){.calc-grid{grid-template-columns:1fr 380px}.estimate{top:88px}}
+.acc-btn{min-height:56px;padding:8px 16px 8px 12px;gap:12px;grid-template-columns:30px minmax(0,1fr) auto 20px}
+.acc-n{width:30px;height:30px;font-size:13px}
+.acc-title{font-size:16px}
+.acc-title small{font-size:13px;margin-top:0}
+.badge{min-width:22px;height:22px;line-height:22px;font-size:11px}
+.acc-list{padding:0 8px 8px;gap:2px}
+.item{padding:2px 12px 2px 8px}
+.item-top{grid-template-columns:32px 1fr auto;gap:8px}
+.code{padding-top:9px;line-height:20px;font-size:13px}
+.chk-label{min-height:38px;padding-block:8px;gap:10px}
+.box{width:20px;height:20px}
+.item-name{font-size:15px;line-height:1.35}
+.item-price{padding-top:9px;line-height:20px;font-size:13px}
+.item-qty{gap:10px;margin:0 0 6px 42px}
+.stepper button{width:34px;height:36px;font-size:18px}
+.stepper input{width:72px;height:36px;font-size:15px}
+.unit{font-size:13px}
+.line-sum{font-size:15px}
+.rm{width:34px;height:34px}
+.hint{margin-left:42px;font-size:13px}
+.estimate{padding:20px 20px 16px}
+@media (min-width:768px){.estimate{padding:24px 24px 20px}}
+.est-head h3{font-size:20px}
+.est-empty{padding:16px;font-size:14px;margin:12px 0}
+.est-list{max-height:340px;margin:12px 0}
+.est-li{padding:10px 0;gap:6px}
+.est-name{font-size:14px}
+.est-meta{font-size:12px}
+.est-li .stepper button{width:30px;height:32px;font-size:16px}
+.est-li .stepper input{width:60px;height:32px;font-size:13px}
+.est-li .line-sum{font-size:14px}
+.est-li .rm{width:32px;height:32px}
+.est-total{padding-top:12px}
+.est-total > span:first-child{font-size:14px}
+.total-val{font-size:28px}
+.est-note{font-size:12px}
+.est-actions{margin:16px 0}
+.btn-line{min-height:38px;font-size:13px;padding:0 14px}
+.send-box{gap:12px;padding-top:16px}
+.send-box h4{font-size:16px}
+.estimate .input{min-height:42px;padding:8px 12px;font-size:14px}
+.estimate textarea.input{min-height:64px}
+@media (min-width:1024px){
+  #calculator .sec-head{max-width:none;display:grid;grid-template-columns:auto 1fr;column-gap:32px;align-items:end;margin-bottom:var(--s2)}
+  #calculator .sec-head .eyebrow{grid-column:1/-1}
+  #calculator .sec-head .lead{margin:0 0 2px;max-width:none}
+}
+.note{padding:8px 14px;margin-bottom:var(--s2);font-size:13px;line-height:1.45}
+.acc-btn{min-height:52px;padding-block:6px}
+.acc-list{padding:0 8px 6px}
+@media (min-width:640px){
+  .item{display:flex;flex-wrap:wrap;align-items:center;column-gap:12px}
+  .item-top{flex:1 1 360px;min-width:0}
+  .item-qty{flex:0 0 auto;margin:0}
+  .item .hint{flex-basis:100%;margin:0 0 6px 42px}
+}
+.send-toggle{margin-top:var(--s2)}
+.send-fields{display:grid;gap:10px}
+.estimate .row2{gap:10px;grid-template-columns:1fr 1fr}
+.estimate textarea.input{min-height:56px}
+.est-empty{padding:12px;margin:10px 0}
+.estimate .send-box{padding-top:0;border-top:0;gap:0}
+/* Остальные блоки */
+.req-main{padding:var(--s3) var(--s3)}
+@media (min-width:768px){.req-main{padding:var(--s4)}}
+.req-main form{margin-top:var(--s3);gap:12px}
+.req-img{min-height:200px}
+.drop{padding:var(--s2) var(--s3)}
+.about-grid{gap:var(--s4)}
+.about-media .imgph{aspect-ratio:1/1}
+.feats{margin-top:var(--s3);gap:var(--s2)}
+.stats{margin-top:var(--s3);padding-top:var(--s3)}
+.stat b{font-size:clamp(24px,3vw,32px)}
+.svc{min-height:0;padding:20px;gap:12px}
+.svc-n{width:40px;height:40px;font-size:15px}
+.svc h3{font-size:18px}
+.svc-go{width:34px;height:34px}
+.svc-grid,.team,.gallery{gap:var(--s2)}
+.person figcaption{padding:12px 12px 16px}
+.person b{font-size:16px}
+.shot b{font-size:15px}
+.phone-big{font-size:clamp(26px,4.5vw,40px);margin-top:var(--s3)}
+.dl{margin-top:var(--s3)}
+.dl-row{padding:12px 0}
+.cform{padding:var(--s3);gap:12px}
+@media (min-width:768px){.cform{padding:var(--s4)}}
+.cform h3{font-size:20px}
+.contact-grid{gap:var(--s4)}
+footer{padding-block:var(--s3)}
+
+/* Mobile: компактные размеры */
+@media (max-width:639px){
+  .lead{font-size:16px}
+  h3{font-size:17px}
+  .svc h3{font-size:18px}
+  .svc{min-height:0}
+  .est-head h3,.cform h3{font-size:20px}
+  .hero-badge b{font-size:34px}
+  .about-badge b{font-size:30px}
+  .total-val{font-size:30px}
+  .phone-big{font-size:26px}
+  .stat b{font-size:24px}
+  .eyebrow{font-size:10px}
+}
+
+/* Максимальная компактность */
+.sec{padding-block:36px}
+@media (min-width:1024px){.sec{padding-block:56px}}
+.sec-head{margin-bottom:var(--s2)}
+.eyebrow{margin-bottom:8px;font-size:11px}
+.hero-copy{padding-top:var(--s3)}
+.hero-cta{margin-top:var(--s2)}
+.hero-points{margin-top:var(--s2);gap:6px}
+.calc-grid{gap:var(--s2)}
+.note{padding:6px 12px;margin-bottom:12px;font-size:12.5px;line-height:1.4}
+.acc-btn{min-height:44px;padding:4px 12px 4px 10px;gap:10px;grid-template-columns:28px minmax(0,1fr) auto 18px}
+.acc-n{width:26px;height:26px;font-size:12px}
+.acc-title{font-size:15px}
+.acc-list{padding:0 6px 4px;gap:0}
+.item{padding:0 8px 0 6px}
+.item-top{grid-template-columns:30px 1fr auto;gap:6px}
+.code{padding-top:7px;line-height:20px;font-size:12px}
+.chk-label{min-height:32px;padding-block:6px;gap:8px}
+.box{width:18px;height:18px}
+.item-name{font-size:14px;line-height:1.3}
+.item-price{padding-top:7px;line-height:20px;font-size:12px}
+.stepper button{width:30px;height:32px;font-size:17px}
+.stepper input{width:60px;height:32px;font-size:14px}
+.unit{font-size:12px}
+.line-sum{font-size:14px}
+.rm{width:30px;height:30px}
+.estimate{padding:14px 16px 12px}
+@media (min-width:768px){.estimate{padding:16px 20px 14px}}
+.est-head h3{font-size:18px}
+.est-empty{padding:10px 12px;margin:8px 0;font-size:13px}
+.est-list{margin:8px 0;max-height:300px}
+.est-li{padding:8px 0;gap:4px}
+.est-name{font-size:13.5px}
+.est-meta{font-size:11.5px}
+.est-li .stepper button{width:28px;height:28px;font-size:15px}
+.est-li .stepper input{width:54px;height:28px;font-size:13px}
+.est-li .line-sum{font-size:13px}
+.est-li .rm{width:28px;height:28px}
+.est-total{padding-top:8px}
+.est-total > span:first-child{font-size:13px}
+.total-val{font-size:24px}
+.est-note{font-size:11.5px;margin-top:4px;line-height:1.35}
+.est-actions{margin:10px 0 8px;gap:6px}
+.btn-line{min-height:34px;font-size:12.5px;padding:0 12px}
+.send-toggle{margin-top:4px}
+.send-fields{gap:8px}
+.estimate .input{min-height:38px;padding:6px 10px;font-size:14px}
+.estimate textarea.input{min-height:48px}
+.estimate .field label{font-size:12px}
+.estimate .field{gap:3px}
+.link-btn{min-height:32px;font-size:13px}
+.btn{min-height:42px;padding:0 20px;font-size:14px}
+.btn-lg{min-height:48px;padding:0 24px}
+.svc{padding:16px;gap:8px}
+.svc-n{width:34px;height:34px;font-size:14px}
+.req-main{padding:var(--s3) 20px}
+@media (min-width:768px){.req-main{padding:32px}}
+.cform{padding:20px}
+@media (min-width:768px){.cform{padding:28px}}
+.dl-row{padding:8px 0}
+@media (max-width:639px){
+  .sec{padding-block:28px}
+  .lead{font-size:15px;margin-top:6px}
+  .item-top{grid-template-columns:1fr}
+  .code{display:none}
+  .item-price{grid-column:1;padding:0;margin:-4px 0 4px 26px;line-height:1.2}
+  .item-qty{margin:0 0 4px 26px;gap:8px}
+  .hint{margin:0 0 4px 26px}
+  .item .stepper input{width:54px}
+  .acc-n{width:24px;height:24px}
+  .acc-btn{grid-template-columns:24px minmax(0,1fr) auto 18px;padding:4px 10px}
+  .est-head h3,.cform h3{font-size:18px}
+  .hero-badge b{font-size:28px}
+  .total-val{font-size:24px}
+  .eyebrow{font-size:10px;letter-spacing:.06em}
+}
+
+select.input{appearance:none;-webkit-appearance:none;padding-right:30px;background-image:linear-gradient(45deg,transparent 50%,#9AA1AB 50%),linear-gradient(135deg,#9AA1AB 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px;background-repeat:no-repeat;cursor:pointer}
+.estimate select.input option{background:#2A2E33;color:#fff}
+.estimate select.input:invalid,.estimate select.input:has(option[value=""]:checked){color:#7C848D}
+@media (max-width:639px){.estimate .row2{grid-template-columns:1fr}}
 /* Print */
 #printSheet{display:none}
 @media print{
@@ -431,26 +654,40 @@ footer{background:var(--dark2);padding-block:var(--s4);color:#9AA1AB;font-size:1
             <h3>Ваша смета</h3>
             <button class="link-btn" id="clearBtn" type="button" hidden>Очистить</button>
           </div>
-          <div class="est-empty" id="estEmpty">Пока пусто. Раскройте раздел слева и отметьте нужные работы.</div>
+          <div class="est-empty" id="estEmpty">Пока пусто. Отметьте нужные работы слева.</div>
           <ul class="est-list" id="estList"></ul>
           <div class="est-total">
             <span>Итого по работам</span>
             <span class="total-val" id="totalVal">0 ₽</span>
           </div>
           <p class="est-note" id="factNote" hidden>Стоимость позиций «по факту» определяется по результатам работ и в итог не входит.</p>
-          <p class="est-note">Ориентировочная стоимость работ. Материалы и доставка не включены — рассчитываются отдельно.</p>
+          <p class="est-note">Предварительная стоимость работ. Материалы и доставка — отдельно.</p>
           <div class="est-actions">
             <button class="btn-line" id="copyBtn" type="button">Скопировать</button>
             <button class="btn-line" id="printBtn" type="button">Распечатать</button>
           </div>
           <form class="send-box" id="sendEstimate" novalidate>
-            <h4>Отправить смету нам</h4>
-            <div class="field"><label for="se-name">Имя</label><input class="input" id="se-name" name="name" autocomplete="name" maxlength="80"></div>
-            <div class="field"><label for="se-phone">Телефон</label><input class="input" id="se-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" maxlength="25"></div>
-            <div class="field"><label for="se-comment">Комментарий</label><textarea class="input" id="se-comment" name="comment" rows="2" maxlength="1000"></textarea></div>
-            <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <button class="btn btn-block" type="submit">Отправить смету</button>
-            <div class="status" id="seStatus" role="status" hidden></div>
+            <button class="btn btn-block send-toggle" id="sendToggle" type="button" aria-expanded="false" aria-controls="sendFields">Отправить смету нам</button>
+            <div class="send-fields" id="sendFields" hidden>
+              <div class="row2">
+                <div class="field"><label for="se-name">Имя</label><input class="input" id="se-name" name="name" autocomplete="name" maxlength="80"></div>
+                <div class="field"><label for="se-phone" id="sePhoneLbl">Телефон</label><input class="input" id="se-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" maxlength="25"></div>
+              </div>
+              <div class="field"><label for="se-channel">Куда отправить смету?</label>
+                <select class="input" id="se-channel" name="channel">
+                  <option value="" selected disabled>Выберите способ</option>
+                  <option value="telegram">Telegram</option>
+                  <option value="whatsapp">WhatsApp</option>
+                  <option value="max">Max</option>
+                  <option value="email">Электронная почта</option>
+                </select>
+              </div>
+              <div class="field" id="seEmailWrap" hidden><label for="se-email">Электронная почта</label><input class="input" id="se-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" maxlength="120"></div>
+              <div class="field"><label for="se-comment">Комментарий</label><textarea class="input" id="se-comment" name="comment" rows="2" maxlength="1000"></textarea></div>
+              <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+              <button class="btn btn-block" type="submit">Отправить смету</button>
+              <div class="status" id="seStatus" role="status" hidden></div>
+            </div>
           </form>
         </aside>
       </div>
@@ -588,14 +825,14 @@ window.SITE_CONFIG = {
   },
 
   company: {
-    name: "СтройМастер",                       // название компании (временное)
+    name: "Название",                          // название компании — замените на своё
     tagline: "Ремонт, строительство, монтаж и отделка",
     description: "Ремонт, строительство, монтаж и отделка. Расценки открыты: вы собираете смету сами, мы проверяем объёмы и называем окончательную сумму.",
     phone: "+7 (000) 000-00-00",
     email: "info@example.com",
     address: "г. Город, ул. Примерная, 1",
     workHours: "Пн–Сб, 9:00–19:00",
-    logoText: "СМ"                              // буквы в логотипе-заглушке
+    logoText: "Н"                               // буква в логотипе-заглушке
   },
 
   messengers: [
@@ -648,12 +885,12 @@ window.SITE_CONFIG = {
 
   /* Примеры работ. image: путь к фото или пусто — тогда заглушка */
   works: [
-    { title: "Название проекта 1", text: "Квартира, 64 м²", image: "" },
-    { title: "Название проекта 2", text: "Офис, 120 м²", image: "" },
-    { title: "Название проекта 3", text: "Частный дом, 180 м²", image: "" },
-    { title: "Название проекта 4", text: "Магазин, 90 м²", image: "" },
-    { title: "Название проекта 5", text: "Ванная комната", image: "" },
-    { title: "Название проекта 6", text: "Кухня-гостиная", image: "" }
+    { title: "Название проекта 1", text: "Квартира, 64 м²", images: ["", "", "", ""] },
+    { title: "Название проекта 2", text: "Офис, 120 м²", images: ["", "", "", ""] },
+    { title: "Название проекта 3", text: "Частный дом, 180 м²", images: ["", "", "", ""] },
+    { title: "Название проекта 4", text: "Магазин, 90 м²", images: ["", "", "", ""] },
+    { title: "Название проекта 5", text: "Ванная комната", images: ["", "", "", ""] },
+    { title: "Название проекта 6", text: "Кухня-гостиная", images: ["", "", "", ""] }
   ]
 };
 </script>
@@ -1270,9 +1507,29 @@ function applyConfig(){
   }).join('');
 
   $('#gallery').innerHTML = (CFG.works||[]).map(function(w){
-    var img = w.image ? '<img src="'+esc(w.image)+'" alt="'+esc(w.title)+'" loading="lazy">' : '';
-    return '<figure class="shot"><div class="imgph">'+img+'</div><figcaption><b>'+esc(w.title)+'</b><span>'+esc(w.text||'')+'</span></figcaption></figure>';
+    var list = (w.images && w.images.length) ? w.images : [w.image||''];
+    var n = list.length;
+    var slides = list.map(function(src,i){
+      var img = src ? '<img src="'+esc(src)+'" alt="'+esc(w.title)+', фото '+(i+1)+'" loading="lazy">' : '';
+      return '<div class="slide imgph">'+img+'</div>';
+    }).join('');
+    var nav = n>1 ? '<button class="sl-btn prev" type="button" aria-label="Предыдущее фото">&#8249;</button><button class="sl-btn next" type="button" aria-label="Следующее фото">&#8250;</button><span class="sl-count" aria-live="polite">1 / '+n+'</span>' : '';
+    return '<figure class="shot"><div class="track" tabindex="0" aria-label="Фотографии: '+esc(w.title)+'">'+slides+'</div>'+nav+'<figcaption><b>'+esc(w.title)+'</b><span>'+esc(w.text||'')+'</span></figcaption></figure>';
   }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('#gallery .shot'), function(shot){
+    var tr = shot.querySelector('.track'), cnt = shot.querySelector('.sl-count');
+    if(!cnt) return;
+    var total = tr.children.length;
+    function idx(){ return Math.round(tr.scrollLeft / tr.clientWidth); }
+    function go(i){ i = Math.max(0, Math.min(total-1, i)); tr.scrollTo({left:i*tr.clientWidth, behavior:'smooth'}); }
+    tr.addEventListener('scroll', function(){ cnt.textContent = (idx()+1)+' / '+total; }, {passive:true});
+    shot.querySelector('.prev').addEventListener('click', function(){ go(idx()-1); });
+    shot.querySelector('.next').addEventListener('click', function(){ go(idx()+1); });
+    tr.addEventListener('keydown', function(e){
+      if(e.key==='ArrowRight'){ e.preventDefault(); go(idx()+1); }
+      if(e.key==='ArrowLeft'){ e.preventDefault(); go(idx()-1); }
+    });
+  });
 
   $('#msgrs').innerHTML = (CFG.messengers||[]).map(function(m){
     return '<a class="chip" href="'+esc(m.url)+'" target="_blank" rel="noopener">'+esc(m.name)+'</a>';
@@ -1554,14 +1811,27 @@ function renderPrintSheet(){
 /* ================== Отправка (без имитации) ================== */
 function setStatus(el,type,msg){ el.hidden=false; el.className='status '+type; el.textContent=msg; }
 function validPhone(v){ var d = String(v).replace(/\D/g,''); return d.length>=10 && d.length<=15; }
+var CH_NAMES = {telegram:'Telegram', whatsapp:'WhatsApp', max:'Max', email:'электронную почту'};
+function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim()); }
 function checkContact(form, st){
-  var name = form.elements.name, phone = form.elements.phone, ok = true;
-  [name,phone].forEach(function(f){f.classList.remove('bad');});
-  if(!name.value.trim()){ name.classList.add('bad'); ok=false; }
-  if(!validPhone(phone.value)){ phone.classList.add('bad'); ok=false; }
-  if(!ok) setStatus(st,'err','Укажите имя и корректный номер телефона.');
+  var name = form.elements.name, phone = form.elements.phone, ch = form.elements.channel, em = form.elements.email, ok = true, msg = [];
+  [name,phone,ch,em].forEach(function(f){f.classList.remove('bad');});
+  if(!name.value.trim()){ name.classList.add('bad'); ok=false; msg.push('имя'); }
+  if(!ch.value){ ch.classList.add('bad'); ok=false; msg.push('способ отправки'); }
+  if(!validPhone(phone.value)){ phone.classList.add('bad'); ok=false; msg.push('корректный номер телефона'); }
+  if(ch.value==='email' && !validEmail(em.value)){ em.classList.add('bad'); ok=false; msg.push('корректную почту'); }
+  if(!ok) setStatus(st,'err','Укажите: '+msg.join(', ')+'.');
   return ok;
 }
+(function(){
+  var ch = $('#se-channel'), wrap = $('#seEmailWrap'), lbl = $('#sePhoneLbl');
+  ch.addEventListener('change', function(){
+    var v = ch.value;
+    wrap.hidden = v!=='email';
+    lbl.textContent = v==='email' ? 'Телефон для связи' : (v ? 'Телефон в '+({telegram:'Telegram',whatsapp:'WhatsApp',max:'Max'}[v]) : 'Телефон');
+    ch.classList.remove('bad');
+  });
+})();
 var NOT_CONNECTED = 'Отправка заявок пока не подключена, поэтому данные никуда не ушли. Скопируйте или распечатайте смету и свяжитесь с нами по контактам ниже.';
 
 function submitTo(url, body, isForm, btn, st, okMsg, after){
@@ -1587,9 +1857,16 @@ $('#sendEstimate').addEventListener('submit', function(e){
   var payload = {
     type:'estimate',
     client:{name:f.elements.name.value.trim(),phone:f.elements.phone.value.trim(),comment:f.elements.comment.value.trim()},
+    delivery:{channel:f.elements.channel.value, phone:f.elements.phone.value.trim(), email:f.elements.channel.value==='email'?f.elements.email.value.trim():''},
     items:validLines(), total:centsToRub(totalCents()), currency:CUR, createdAt:new Date().toISOString()
   };
   submitTo(eps.estimate, payload, false, btn, st, 'Смета отправлена. Мы свяжемся с вами в ближайшее время.');
+});
+
+$('#sendToggle').addEventListener('click', function(){
+  this.hidden = true; this.setAttribute('aria-expanded','true');
+  $('#sendFields').hidden = false;
+  var n = $('#se-name'); if(n) n.focus();
 });
 
 /* Файлы */
