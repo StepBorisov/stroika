@@ -80,8 +80,13 @@ header.scrolled{box-shadow:0 4px 20px rgba(20,24,28,.08)}
 .nav-phone{display:none;font-weight:700;font-size:16px;white-space:nowrap}
 .nav-cta{display:none}
 .burger{width:44px;height:44px;border-radius:4px;border:1px solid var(--line);display:grid;place-items:center}
-.burger span,.burger span::before{display:block;width:20px;height:2px;background:var(--ink);position:relative}
-.burger span::before{content:"";position:absolute;top:6px;left:0}
+.burger span{display:block;width:20px;height:2px;position:relative;background:transparent}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:20px;height:2px;background:var(--ink);border-radius:1px;transition:transform .55s cubic-bezier(.4,0,.2,1),top .55s cubic-bezier(.4,0,.2,1)}
+.burger span::before{top:-3px}
+.burger span::after{top:3px}
+.burger[aria-expanded="true"] span::before{top:0;transform:rotate(45deg)}
+.burger[aria-expanded="true"] span::after{top:0;transform:rotate(-45deg)}
+@media (prefers-reduced-motion:reduce){.burger span::before,.burger span::after{transition:none}}
 .mobile-menu{display:none;padding-bottom:var(--s2)}
 .mobile-menu.open{display:grid}
 .mobile-menu a{padding:14px 0;border-top:1px solid var(--line);font-weight:600}
@@ -615,8 +620,8 @@ body.typing .mbar{display:none}
 /* Кнопки поверх фото: прозрачные, с оранжевой обводкой */
 .hero-media .hero-cta{position:absolute;z-index:3;right:var(--pad);bottom:var(--s3);margin:0;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
 .hero-media .hero-cta .btn{width:auto;min-width:220px;justify-content:center;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.6);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);transition:background .2s,border-color .2s}
-.hero-media .hero-cta .btn:not(.btn-ghost){background:rgba(232,90,12,.16);border:1px solid rgba(255,122,48,.8)}
-.hero-media .hero-cta .btn:not(.btn-ghost):hover{background:rgba(232,90,12,.32)}
+.hero-media .hero-cta .btn:not(.btn-ghost){background:rgba(232,90,12,.16);border:1px solid rgba(255,255,255,.85)}
+.hero-media .hero-cta .btn:not(.btn-ghost):hover{background:rgba(232,90,12,.32);border-color:#fff}
 .hero-media .hero-cta .btn-ghost{background:transparent;border:1px solid rgba(255,122,48,.4)}
 .hero-media .hero-cta .btn-ghost:hover{background:rgba(232,90,12,.12);border-color:rgba(255,122,48,.7)}
 @media (min-width:1024px){.hero-media .hero-cta{right:var(--pad);bottom:var(--s4)}}
@@ -915,8 +920,8 @@ window.SITE_CONFIG = {
     title: "Считаем открыто и работаем по договору",
     text: "Здесь будет рассказ о компании: сколько лет работаете, какие объекты сдали, чем отличается ваш подход. Текст временный.",
     stats: [
-      { value: "10+", label: "лет на рынке" },
-      { value: "300+", label: "объектов сдано" },
+      { value: "3+", label: "года на рынке" },
+      { value: "50+", label: "объектов сдано" },
       { value: "24 мес.", label: "гарантия на работы" }
     ],
     principles: [
