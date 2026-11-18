@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Ремонт и строительство — калькулятор сметы онлайн</title>
 <meta name="description" content="Рассчитайте предварительную стоимость ремонтных, строительных, монтажных и отделочных работ онлайн.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -309,9 +309,10 @@ textarea.input{min-height:104px;resize:vertical}
 .shot .track::-webkit-scrollbar{display:none}
 .shot .slide{flex:0 0 100%;scroll-snap-align:center;aspect-ratio:4/3}
 .shot .slide:nth-child(even){background-color:#CFD4D9}
-.sl-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:34px;height:34px;border:0;border-radius:3px;background:rgba(29,32,35,.72);color:#fff;font-size:22px;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0 0 3px}
-.sl-btn:hover{background:var(--orange)}
-.sl-btn.prev{left:8px}.sl-btn.next{right:8px}
+.sl-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:36px;height:48px;border:0;background:none;color:var(--orange);cursor:pointer;display:grid;place-items:center;padding:0;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35));transition:opacity .2s}
+.sl-btn svg{width:22px;height:22px;stroke:currentColor;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.sl-btn:hover{opacity:.7}
+.sl-btn.prev{left:2px}.sl-btn.next{right:2px}
 .sl-count{position:absolute;top:8px;right:8px;z-index:2;padding:2px 7px;border-radius:3px;background:rgba(29,32,35,.72);color:#fff;font-size:12px;font-weight:500}
 .shot figcaption{pointer-events:none}
 .shot:hover .imgph img{transform:none}
@@ -562,6 +563,33 @@ select.input{appearance:none;-webkit-appearance:none;padding-right:30px;backgrou
 .estimate select.input option{background:#2A2E33;color:#fff}
 .estimate select.input:invalid,.estimate select.input:has(option[value=""]:checked){color:#7C848D}
 @media (max-width:639px){.estimate .row2{grid-template-columns:1fr}}
+
+/* Виды работ: аккордеон */
+.vw{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.vw-item{border-bottom:1px solid var(--line);border-left:3px solid transparent;transition:border-color .3s}
+.vw-item:last-child{border-bottom:0}
+.vw-item.open{border-left-color:var(--orange)}
+.vw-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;min-height:52px;text-align:left}
+.vw-btn:hover{background:var(--grey)}
+.vw-title{font-size:16px;font-weight:700;line-height:1.25}
+.vw-title small{display:block;font-size:13px;font-weight:400;font-style:italic;color:var(--ink2)}
+.vw-btn .chev{flex:none;width:18px;height:18px;transition:transform .3s var(--ease)}
+.vw-item.open .chev{transform:rotate(180deg)}
+.vw-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease)}
+.vw-item.open .vw-panel{grid-template-rows:1fr}
+.vw-inner{overflow:hidden;min-height:0}
+.vw-list{list-style:none;margin:0;padding:0 16px 10px}
+.vw-list li{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-top:1px solid var(--line);font-size:14px}
+.vw-list li span{min-width:0}
+.vw-list li b{flex:none;font-weight:600;white-space:nowrap;text-align:right}
+.vw-cta{margin-top:14px}
+@media (max-width:639px){.vw-list li{flex-direction:column;gap:2px}.vw-list li b{text-align:left}.vw-cta .btn{width:100%}}
+/* Поля ввода: 16px, чтобы мобильные браузеры не приближали экран при фокусе */
+@media (max-width:1023px){
+  input,select,textarea,.input,.stepper input,.estimate .input,.est-li .stepper input{font-size:16px}
+}
+.item,.est-li{scroll-margin-block:35vh}
+body.typing .mbar{display:none}
 /* Print */
 #printSheet{display:none}
 @media print{
@@ -671,7 +699,7 @@ select.input{appearance:none;-webkit-appearance:none;padding-right:30px;backgrou
             <div class="send-fields" id="sendFields" hidden>
               <div class="row2">
                 <div class="field"><label for="se-name">Имя</label><input class="input" id="se-name" name="name" autocomplete="name" maxlength="80"></div>
-                <div class="field"><label for="se-phone" id="sePhoneLbl">Телефон</label><input class="input" id="se-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" maxlength="25"></div>
+                <div class="field"><label for="se-phone" id="sePhoneLbl">Телефон</label><input class="input" id="se-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" maxlength="18"></div>
               </div>
               <div class="field"><label for="se-channel">Куда отправить смету?</label>
                 <select class="input" id="se-channel" name="channel">
@@ -710,7 +738,7 @@ select.input{appearance:none;-webkit-appearance:none;padding-right:30px;backgrou
             <ul class="files" id="fileList"></ul>
             <div class="row2">
               <div class="field"><label for="rq-name">Имя</label><input class="input" id="rq-name" name="name" autocomplete="name" maxlength="80"></div>
-              <div class="field"><label for="rq-phone">Телефон</label><input class="input" id="rq-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" maxlength="25"></div>
+              <div class="field"><label for="rq-phone">Телефон</label><input class="input" id="rq-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" maxlength="18"></div>
             </div>
             <div class="field"><label for="rq-comment">Комментарий</label><textarea class="input" id="rq-comment" name="comment" rows="3" maxlength="1500" placeholder="Что нужно сделать, адрес, желаемые сроки"></textarea></div>
             <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -744,9 +772,10 @@ select.input{appearance:none;-webkit-appearance:none;padding-right:30px;backgrou
       <div class="sec-head">
         <span class="eyebrow">Виды работ</span>
         <h2>Чем мы занимаемся</h2>
-        <p class="lead">Выберите направление — откроем его в калькуляторе.</p>
+        <p class="lead">Раскройте направление, чтобы увидеть список работ и цены.</p>
       </div>
-      <div class="svc-grid" id="servicesGrid"></div>
+      <div class="vw" id="servicesGrid"></div>
+      <div class="vw-cta"><a class="btn" href="#calculator" id="toCalc">Перейти к расчёту сметы</a></div>
     </div>
   </section>
 
@@ -785,7 +814,7 @@ select.input{appearance:none;-webkit-appearance:none;padding-right:30px;backgrou
       <form class="cform" id="contactForm" novalidate>
         <h3>Оставить заявку</h3>
         <div class="field"><label for="ct-name">Имя</label><input class="input" id="ct-name" name="name" autocomplete="name" maxlength="80"></div>
-        <div class="field"><label for="ct-phone">Телефон</label><input class="input" id="ct-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" maxlength="25"></div>
+        <div class="field"><label for="ct-phone">Телефон</label><input class="input" id="ct-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" maxlength="18"></div>
         <div class="field"><label for="ct-comment">Сообщение</label><textarea class="input" id="ct-comment" name="comment" rows="3" maxlength="1500"></textarea></div>
         <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
         <button class="btn btn-arrow btn-lg" type="submit">Отправить</button>
@@ -1513,7 +1542,7 @@ function applyConfig(){
       var img = src ? '<img src="'+esc(src)+'" alt="'+esc(w.title)+', фото '+(i+1)+'" loading="lazy">' : '';
       return '<div class="slide imgph">'+img+'</div>';
     }).join('');
-    var nav = n>1 ? '<button class="sl-btn prev" type="button" aria-label="Предыдущее фото">&#8249;</button><button class="sl-btn next" type="button" aria-label="Следующее фото">&#8250;</button><span class="sl-count" aria-live="polite">1 / '+n+'</span>' : '';
+    var nav = n>1 ? '<button class="sl-btn prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24"><path d="M15 4l-8 8 8 8"/></svg></button><button class="sl-btn next" type="button" aria-label="Следующее фото"><svg viewBox="0 0 24 24"><path d="M9 4l8 8-8 8"/></svg></button><span class="sl-count" aria-live="polite">1 / '+n+'</span>' : '';
     return '<figure class="shot"><div class="track" tabindex="0" aria-label="Фотографии: '+esc(w.title)+'">'+slides+'</div>'+nav+'<figcaption><b>'+esc(w.title)+'</b><span>'+esc(w.text||'')+'</span></figcaption></figure>';
   }).join('');
   Array.prototype.forEach.call(document.querySelectorAll('#gallery .shot'), function(shot){
@@ -1544,11 +1573,14 @@ function applyConfig(){
   var GO = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg>';
   $('#servicesGrid').innerHTML = cats.map(function(c,i){
     var n = c.items.length;
-    return '<button type="button" class="svc" data-open-cat="'+esc(c.id)+'">' +
-      '<span class="svc-n">'+String(i+1).padStart(2,'0')+'</span>' +
-      '<h3>'+esc(c.title)+'</h3>' +
-      '<p>'+n+' '+plural(n,['услуга','услуги','услуг'])+(c.description?' · '+esc(c.description):'')+'</p>' +
-      '<span class="svc-go">'+GO+'</span></button>';
+    var rows = c.items.map(function(it){
+      var pr = (it.price==null) ? 'по факту' : money(it.price) + (it.unit ? ' / '+esc(it.unit) : '');
+      return '<li><span>'+esc(it.name)+'</span><b>'+pr+'</b></li>';
+    }).join('');
+    return '<div class="vw-item" data-vw="'+i+'">' +
+      '<button type="button" class="vw-btn" aria-expanded="false" aria-controls="vw-p'+i+'">' +
+      '<span class="vw-title">'+esc(c.title)+'<small>'+n+' '+plural(n,['услуга','услуги','услуг'])+'</small></span>'+CHEV+'</button>' +
+      '<div class="vw-panel" id="vw-p'+i+'"><div class="vw-inner"><ul class="vw-list">'+rows+'</ul></div></div></div>';
   }).join('');
 }
 function plural(n,f){ var a=n%10,b=n%100; return (a===1&&b!==11)?f[0]:(a>=2&&a<=4&&(b<10||b>=20))?f[1]:f[2]; }
@@ -1727,12 +1759,8 @@ document.addEventListener('click', function(e){
   }
   var ab = e.target.closest('.acc-btn');
   if(ab){ var item = ab.parentElement; setCatOpen(item.dataset.cat, !item.classList.contains('open')); return; }
-  var oc = e.target.closest('[data-open-cat]');
-  if(oc){
-    setCatOpen(oc.dataset.openCat, true);
-    $('#calculator').scrollIntoView({behavior:'smooth'});
-    setTimeout(function(){ var el=$('.acc-item[data-cat="'+cssEsc(oc.dataset.openCat)+'"]'); if(el) el.scrollIntoView({behavior:'smooth',block:'center'}); },450);
-  }
+  var vb = e.target.closest('.vw-btn');
+  if(vb){ var it = vb.parentElement, o = !it.classList.contains('open'); it.classList.toggle('open', o); vb.setAttribute('aria-expanded', o); return; }
 });
 $('#clearBtn').addEventListener('click', function(){
   if(!window.confirm('Очистить всю смету?')) return;
@@ -1811,6 +1839,57 @@ function renderPrintSheet(){
 /* ================== Отправка (без имитации) ================== */
 function setStatus(el,type,msg){ el.hidden=false; el.className='status '+type; el.textContent=msg; }
 function validPhone(v){ var d = String(v).replace(/\D/g,''); return d.length>=10 && d.length<=15; }
+
+/* ================== Маска телефона и видимость поля над клавиатурой ================== */
+function maskPhone(raw){
+  var d = String(raw).replace(/\D/g,'');
+  if(/^\+7/.test(String(raw).trim())) d = d.slice(1);
+  if(d.length>10 && /^[78]/.test(d)) d = d.slice(1);
+  d = d.slice(0,10);
+  var o = '+7';
+  if(d.length) o += ' (' + d.slice(0,3);
+  if(d.length>=3) o += ')';
+  if(d.length>3) o += ' ' + d.slice(3,6);
+  if(d.length>6) o += '-' + d.slice(6,8);
+  if(d.length>8) o += '-' + d.slice(8,10);
+  return {text:o, digits:d.length};
+}
+Array.prototype.forEach.call(document.querySelectorAll('input[type=tel]'), function(inp){
+  var prev = 0;
+  inp.addEventListener('focus', function(){ if(!inp.value) inp.value = '+7 ('; prev = maskPhone(inp.value).digits; });
+  inp.addEventListener('blur', function(){ if(maskPhone(inp.value).digits===0) inp.value=''; });
+  inp.addEventListener('input', function(e){
+    var m = maskPhone(inp.value);
+    if(e.inputType && e.inputType.indexOf('delete')===0 && m.digits===prev && prev>0){
+      // удалили скобку/тире/пробел — убираем последнюю цифру
+      var d = String(inp.value).replace(/\D/g,'').slice(0,-1);
+      m = maskPhone('+7'+d.slice(1));
+    }
+    inp.value = m.text; if(m.digits===0 && e.inputType && e.inputType.indexOf('delete')===0) inp.value='+7 (';
+    prev = m.digits;
+  });
+});
+(function(){
+  function isField(el){ return el && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName); }
+  function reveal(el){
+    if(!el || !el.scrollIntoView) return;
+    var box = el.closest('.item,.est-li,.field') || el;
+    box.scrollIntoView({block:'center', behavior:'smooth'});
+  }
+  document.addEventListener('focusin', function(e){
+    if(!isField(e.target)) return;
+    document.body.classList.add('typing');
+    setTimeout(function(){ reveal(e.target); }, 350);
+  });
+  document.addEventListener('focusout', function(){
+    setTimeout(function(){ if(!isField(document.activeElement)) document.body.classList.remove('typing'); }, 50);
+  });
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize', function(){
+      if(isField(document.activeElement)) reveal(document.activeElement);
+    });
+  }
+})();
 var CH_NAMES = {telegram:'Telegram', whatsapp:'WhatsApp', max:'Max', email:'электронную почту'};
 function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim()); }
 function checkContact(form, st){
