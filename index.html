@@ -800,7 +800,7 @@ body.typing .mbar{display:none}
             <button class="btn-line" id="printBtn" type="button">Распечатать</button>
           </div>
           <form class="send-box" id="sendEstimate" novalidate>
-            <button class="btn btn-block send-toggle" id="sendToggle" type="button" aria-expanded="false" aria-controls="sendFields">Отправить смету нам</button>
+            <button class="btn btn-block send-toggle" id="sendToggle" type="button" aria-expanded="false" aria-controls="sendFields">Получить смету</button>
             <div class="send-fields" id="sendFields" hidden>
               <div class="row2">
                 <div class="field"><label for="se-name">Имя</label><input class="input" id="se-name" name="name" autocomplete="name" maxlength="80"></div>
@@ -818,7 +818,7 @@ body.typing .mbar{display:none}
               <div class="field" id="seEmailWrap" hidden><label for="se-email">Электронная почта</label><input class="input" id="se-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" maxlength="120"></div>
               <div class="field"><label for="se-comment">Комментарий</label><textarea class="input" id="se-comment" name="comment" rows="2" maxlength="1000"></textarea></div>
               <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-              <button class="btn btn-block" type="submit">Отправить смету</button>
+              <button class="btn btn-block" type="submit">Получить смету</button>
               <div class="status" id="seStatus" role="status" hidden></div>
             </div>
           </form>
@@ -992,8 +992,11 @@ window.SITE_CONFIG = {
        estimate — смета + контакты (JSON)
        request  — заявка с файлами (multipart/form-data)
        contact  — обычная форма связи (JSON)                         */
+  /* Адрес сервера приёма (после размещения на Render), например "https://estimate-backend.onrender.com".
+     Пока пусто — формы честно сообщают, что отправка не подключена. */
   endpoints: {
-    estimate: "",
+    base: "",
+    estimate: "",   // можно не заполнять, если указан base
     request: "",
     contact: ""
   },
@@ -1892,6 +1895,13 @@ function validLines(){
             sum:r?null:centsToRub(lineCents(q,it.price))};
   });
 }
+function contactLines(){
+  var c = CFG.company||{}, o = [];
+  if(c.phone) o.push('Телефон: '+c.phone);
+  if(c.email) o.push('Почта: '+c.email);
+  (CFG.messengers||[]).forEach(function(m){ if(m && m.url && m.url!=='#') o.push(m.name+': '+m.url); });
+  return o;
+}
 function estimateText(){
   var lines = validLines(), c = CFG.company||{};
   var out = ['Предварительная смета — '+(c.name||''), 'Дата: '+new Date().toLocaleDateString('ru-RU'), ''];
@@ -1902,6 +1912,8 @@ function estimateText(){
   out.push('', 'ИТОГО (работы): '+money(centsToRub(totalCents())));
   if(lines.some(function(l){return l.onRequest;})) out.push('Позиции «по факту» в итог не входят.');
   out.push('Материалы и доставка не включены и рассчитываются отдельно.');
+  var ct = contactLines();
+  if(ct.length) out.push('', 'Если смета вас устраивает — свяжитесь с нами, и мы начнём работу:'), ct.forEach(function(x){ out.push(x); });
   return out.join('\n').replace(/\u00A0/g,' ');
 }
 function needLines(statusEl){
@@ -1946,7 +1958,8 @@ function renderPrintSheet(){
     '<h1>Предварительная смета</h1><p>'+esc(c.name||'')+' · '+esc(c.phone||'')+'</p><p>Дата: '+new Date().toLocaleDateString('ru-RU')+'</p>' +
     '<table><thead><tr><th>№</th><th>Работа</th><th class="r">Кол-во</th><th>Ед.</th><th class="r">Цена</th><th class="r">Сумма</th></tr></thead><tbody>'+rows+'</tbody></table>' +
     '<p class="tot">Итого (работы): '+money(centsToRub(totalCents()))+'</p>' +
-    (lines.some(function(l){return l.onRequest;})?'<p class="note">Позиции «по факту» в итоговую сумму не входят: стоимость определяется по результатам работ.</p>':'')+'<p class="note">Расчёт предварительный. Материалы и их доставка в смету не включены: рассчитываются индивидуально и согласовываются с заказчиком.</p>';
+    (lines.some(function(l){return l.onRequest;})?'<p class="note">Позиции «по факту» в итоговую сумму не входят: стоимость определяется по результатам работ.</p>':'')+'<p class="note">Расчёт предварительный. Материалы и их доставка в смету не включены: рассчитываются индивидуально и согласовываются с заказчиком.</p>' +
+    (contactLines().length ? '<p style="margin-top:12pt"><b>Если смета вас устраивает — свяжитесь с нами, и мы начнём работу:</b></p>' + contactLines().map(function(x){ return '<p>'+esc(x)+'</p>'; }).join('') : '');
 }
 
 /* ================== Отправка (без имитации) ================== */
@@ -2047,6 +2060,10 @@ function submitTo(url, body, isForm, btn, st, okMsg, after){
   }).then(function(){ btn.disabled = false; });
 }
 var eps = CFG.endpoints || {};
+(function(){
+  var b = String(eps.base||'').replace(/\/+$/,'');
+  if(b){ eps.estimate = eps.estimate || b+'/api/estimate'; eps.request = eps.request || b+'/api/request'; eps.contact = eps.contact || b+'/api/contact'; }
+})();
 
 $('#sendEstimate').addEventListener('submit', function(e){
   e.preventDefault();
@@ -2060,7 +2077,7 @@ $('#sendEstimate').addEventListener('submit', function(e){
     delivery:{channel:f.elements.channel.value, phone:f.elements.phone.value.trim(), email:f.elements.channel.value==='email'?f.elements.email.value.trim():''},
     items:validLines(), total:centsToRub(totalCents()), currency:CUR, createdAt:new Date().toISOString()
   };
-  submitTo(eps.estimate, payload, false, btn, st, 'Смета отправлена. Мы свяжемся с вами в ближайшее время.');
+  submitTo(eps.estimate, payload, false, btn, st, 'Заявка принята. Мы пришлём смету выбранным способом в ближайшее время.');
 });
 
 $('#sendToggle').addEventListener('click', function(){
